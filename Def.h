@@ -18,6 +18,7 @@ private:
 public:
     void Def(const std::string& nombre_variable, const std::string& valor);
     bool existeVariable(const std::string& nombre_variable);
+    void Put(const std::string& nombre_variable, const std::string& valor);
 };
 
 #endif

@@ -57,6 +57,41 @@ public:
         variables[nombre_variable] = var;
         std::cout << "Variable " << nombre_variable << " definida correctamente con valor " << valor << ".\n";
     }
+
+
+    //PUT:  Método para alterar el valor de una variable existente
+    void Put(const std::string& nombre_variable, const std::string& valor) {
+        auto it = variables.find(nombre_variable);
+        if (it == variables.end()) {
+            std::cerr << "Error: La variable no existe.\n";
+            return;
+        }
+
+        Variable& var = it->second;
+        std::regex operation_regex(R"(Substr\((\d+),\s*(\d+)\))"); // Expresión regular para la operación Substr
+        std::smatch match;
+
+        if (std::regex_match(valor, match, operation_regex)) {
+            // Si la expresión coincide con una operación Substr, realiza la operación
+            int op1 = std::stoi(match[1].str());
+            int op2 = std::stoi(match[2].str());
+            int resultado = op1 - op2;
+            var.valor = std::to_string(resultado);
+            std::cout << "Variable " << nombre_variable << " actualizada con el resultado de la operación: " << var.valor << ".\n";
+            return;
+        } else {
+            // Si el valor es un número o un valor lógico permitido
+            if ((isdigit(valor[0]) && var.tipo == DataType::Numero) ||
+                ((valor == "TRUE" || valor == "FALSE") && var.tipo == DataType::Logico)) {
+                var.valor = valor;
+                std::cout << "Variable " << nombre_variable << " actualizada correctamente con valor " << valor << ".\n";
+            } else {
+                std::cerr << "Error semántico: No se puede cambiar el tipo de dato de la variable.\n";
+            }
+        }
+    }
+
+
 };
 
 // Instancia global de VariableManager para que sea accesible desde el main
