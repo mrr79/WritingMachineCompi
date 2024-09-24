@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include <regex> // Necesario para usar expresiones regulares
 
 // Enum para definir los tipos de datos
 enum class DataType { Numero, Logico };
@@ -58,8 +59,7 @@ public:
         std::cout << "Variable " << nombre_variable << " definida correctamente con valor " << valor << ".\n";
     }
 
-
-    //PUT:  Método para alterar el valor de una variable existente
+    // Método para alterar el valor de una variable existente
     void Put(const std::string& nombre_variable, const std::string& valor) {
         auto it = variables.find(nombre_variable);
         if (it == variables.end()) {
@@ -90,6 +90,48 @@ public:
             }
         }
     }
+
+    // Método para incrementar el valor de una variable
+    void Add(const std::string& nombre_variable, const std::string& incremento = "1") {
+        auto it = variables.find(nombre_variable);
+        if (it == variables.end()) {
+            std::cerr << "Error: La variable " << nombre_variable << " no existe.\n";
+            return;
+        }
+
+        Variable& var = it->second;
+
+        if (var.tipo != DataType::Numero) {
+            std::cerr << "Error semántico: Solo se pueden incrementar variables numéricas.\n";
+            return;
+        }
+
+        int valor_actual = std::stoi(var.valor);
+        int incremento_valor;
+
+        // Verificar si el incremento es una variable o un número
+        if (isdigit(incremento[0])) {
+            incremento_valor = std::stoi(incremento);
+        } else {
+            auto it_incremento = variables.find(incremento);
+            if (it_incremento == variables.end()) {
+                std::cerr << "Error: La variable " << incremento << " no existe.\n";
+                return;
+            }
+            Variable& var_incremento = it_incremento->second;
+            if (var_incremento.tipo != DataType::Numero) {
+                std::cerr << "Error semántico: El incremento debe ser un número o una variable numérica.\n";
+                return;
+            }
+            incremento_valor = std::stoi(var_incremento.valor);
+        }
+
+        // Realizar el incremento
+        valor_actual += incremento_valor;
+        var.valor = std::to_string(valor_actual);
+        std::cout << "Variable " << nombre_variable << " incrementada correctamente. Nuevo valor: " << var.valor << ".\n";
+    }
+
 
 
 };
