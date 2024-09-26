@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <string>
 #include <regex> // Necesario para usar expresiones regulares
+#include "exprtk.hpp"
 
 // Enum para definir los tipos de datos
 enum class DataType { Numero, Logico };
@@ -16,6 +17,7 @@ struct Variable {
 class VariableManager {
 private:
     std::unordered_map<std::string, Variable> variables;
+    int posX, posY, lapiz, color;
 
 public:
     // Método para definir una variable
@@ -130,6 +132,239 @@ public:
         valor_actual += incremento_valor;
         var.valor = std::to_string(valor_actual);
         std::cout << "Variable " << nombre_variable << " incrementada correctamente. Nuevo valor: " << var.valor << ".\n";
+    }
+
+    int evaluarExpresion(const std::string& expresion) {
+
+        std::regex number_regex(R"(\d+)");
+        std::regex variable_regex(R"([a-zA-Z_][a-zA-Z0-9_]*)");
+        exprtk::expression<double> expr;
+        exprtk::parser<double> parser;
+
+        if (std::regex_match(expresion, number_regex)) {
+            // Si es un número, conviértelo
+            return std::stoi(expresion);
+        } else if (std::regex_match(expresion, variable_regex)) {
+            // Si es una variable, búscala en la tabla de variables
+            auto it = variables.find(expresion);
+            if (it != variables.end()) {
+                const Variable& var = it->second; // Obtiene la variable
+                if (var.tipo == DataType::Numero) {
+                    return std::stoi(var.valor); // Devuelve el valor convertido a entero
+                } else {
+                    std::cerr << "Error: La variable " << expresion << " no es de tipo numérico." << std::endl;
+                    return 0;
+                }
+            } else {
+                std::cerr << "Error: Variable no encontrada: " << expresion << std::endl;
+                return 0;
+            }
+        } else if (parser.compile(expresion, expr))
+            {
+                return expr.value();
+                
+        } else {
+            // Aquí podrías agregar un parser más avanzado para operaciones
+            std::cerr << "Error: Expresión inválida: " << expresion << std::endl;
+            return 0;
+        }
+    }
+
+
+    //Funcion para mover el lapiz hacia arriba
+    void ContinueUp(int& posY, int& lapiz,const std::string& n) {
+    // Evalúa el valor de n
+    int value = evaluarExpresion(n);
+
+    if (lapiz == 1) {
+        for (int i = 0; i < value; i++) {
+            //Validacion en caso de que se salga de la hoja
+            if (posY == 1){
+                std::cout << "Error: Se ha alcanzado el limite de la hoja" << std::endl;
+                break;
+            }
+            posY--;
+            std::cout << "Dibujando en la posición Y: " << posY << std::endl;
+        }
+    } else {
+        //Validacion en caso de que se alcance el limite de la hoja
+        if(value > posY || value == posY){
+            std::cout << "Error: El valor ingresado excede el limite de la hoja" << std::endl;
+        }else{
+            posY -= value;
+            std::cout << "Moviéndose a la posición Y: " << posY << std::endl;
+        }
+        
+    }
+}
+    //Funcion para mover el lapiz hacia abajo
+    void ContinueDown(int& posY, int& lapiz,const std::string& n) {
+        // Evalúa el valor de n
+        int value = evaluarExpresion(n);
+
+        if (lapiz == 1) {
+            for (int i = 0; i < value; i++) {
+                //Validacion en caso de que se salga de la hoja
+                if (posY == 100){
+                    std::cout << "Error: Se ha alcanzado el limite de la hoja" << std::endl;
+                    break;
+                }
+                posY++;
+                std::cout << "Dibujando en la posición Y: " << posY << std::endl;
+            }
+        } else {
+            if((posY + value) > 100){
+            std::cout << "Error: El valor ingresado excede el limite de la hoja" << std::endl;
+            }else{
+                posY += value;
+                std::cout << "Moviéndose a la posición Y: " << posY << std::endl;
+            }
+        }
+    }
+
+    //Funcion para mover el lapiz hacia la derecha
+    void ContinueRight(int& posX, int& lapiz,const std::string& n) {
+        // Evalúa el valor de n
+        int value = evaluarExpresion(n);
+
+        if (lapiz == 1) {
+            for (int i = 0; i < value; i++) {
+                //Validacion en caso de que se salga de la hoja
+                if (posX == 100){
+                    std::cout << "Error: Se ha alcanzado el limite de la hoja" << std::endl;
+                    break;
+                }
+                posX++;
+                std::cout << "Dibujando en la posición X: " << posX << std::endl;
+            }
+        } else {
+            if((posX + value) > 100){
+            std::cout << "Error: El valor ingresado excede el limite de la hoja"<< std::endl;
+            }else{
+                posX += value;
+                std::cout << "Moviéndose a la posición X: " << posX << std::endl;
+            }
+        }
+    }
+
+    //Funcion para mover el lapiz hacia la izquierda
+    void ContinueLeft(int& posX, int& lapiz,const std::string& n) {
+        // Evalúa el valor de n
+        int value = evaluarExpresion(n);
+
+        if (lapiz == 1) {
+            for (int i = 0; i < value; i++) {
+                if (posX == 1){
+                std::cout << "Error: Se ha alcanzado el limite de la hoja" << std::endl;
+                break;
+                }
+                posX--;
+                std::cout << "Dibujando en la posición X: " << posX << std::endl;
+            }
+        } else {
+            //Validacion en caso de que se alcance el limite de la hoja
+            if(value > posX || value == posX){
+                std::cout << "Error: El valor ingresado excede el limite de la hoja" << std::endl;
+            }else{
+                posX -= value;
+                std::cout << "Moviéndose a la posición X: " << posX << std::endl;
+            }
+        }
+    }
+
+    void Pos(int& posX, int& posY, const std::string& X, const std::string& Y){
+            // Evaluar las expresiones de X y Y
+        int valorX = evaluarExpresion(X);
+        int valorY = evaluarExpresion(Y);
+
+        if(valorX > 100 || valorX < 0){
+            std::cout << "Error: La nueva posición X del lápiz excede los límites" << std::endl;
+        } else if (valorY > 100 || valorY < 0)
+        {
+            std::cout << "Error: La nueva posición Y del lápiz excede los límites" << std::endl;
+        }
+        else{
+
+            // Asignar los valores a las posiciones actuales
+            posX = valorX;
+            posY = valorY;
+
+            // Mostrar el resultado (aquí puedes agregar lógica adicional según el estado del lápiz)
+            std::cout << "Lapicero colocado en la posición X: " << posX << ", Y: " << posY << std::endl;
+        }
+    }
+
+    void PosX(int& posX, const std::string& n){
+        int valorX = evaluarExpresion(n);
+        if(valorX > 100 || valorX < 0){
+            std::cout << "Error: La nueva posición X del lápiz excede los límites" << std::endl;
+        }
+        else{
+            posX = valorX;
+            std::cout << "Lapicero colocado en la posición X: " << posX << std::endl;
+        }
+    }
+
+    void PosY(int& posY, const std::string& n){
+        int valorY = evaluarExpresion(n);
+        if(valorY > 100 || valorY < 0){
+            std::cout << "Error: La nueva posición Y del lápiz excede los límites: " << std::endl;
+        }
+        else{
+            posY = valorY;
+            std::cout << "Lapicero colocado en la posición Y: " << posY << std::endl;
+        }
+    }
+
+    void UseColor(int& color,const std::string& valor){
+            try {
+            // Convertir el valor de string a entero
+            int valorEntero = std::stoi(valor);
+
+            // Verificar si el valor es 1 o 2
+            if (valorEntero == 1 || valorEntero == 2){
+                color = valorEntero;  // Asignar el color (asumo que 'color' es una variable global o de clase)
+                std::cout << "Se ha asignado el valor de "<< color << " al color de lápiz" << std::endl;
+            } else {
+                std::cout << "Los únicos valores válidos son 1 (Negro) o 2 (Rojo)" << std::endl;
+            }
+        } catch (const std::invalid_argument& e) {
+            std::cout << "Error: Los únicos valores válidos son 1 (Negro) o 2 (Rojo)" << std::endl;
+        } catch (const std::out_of_range& e) {
+            std::cout << "Error: Los únicos valores válidos son 1 (Negro) o 2 (Rojo)" << std::endl;
+        }
+    }
+
+    void Down(int& lapiz){
+        if (lapiz == 1){
+            std::cout << "El lapiz ya esta pegado a la superficie" << std::endl;
+        }
+        else{
+            lapiz = 1;
+            std::cout << "El lapiz se ha pegado a la superficie" << std::endl;
+        }
+    }
+
+    void Up(int& lapiz){
+        if (lapiz == 0){
+            std::cout << "El lapiz ya esta despegado de la superficie" << std::endl;
+        }
+        else{
+            lapiz = 0;
+            std::cout << "El lapiz se ha despegado de la superficie" << std::endl;
+        }
+    }
+
+    void Beginning(int& posX, int& posY){
+        if (posX == 1 && posY == 1){
+            std::cout << "El lapiz ya se encuentra en la posicion inicial" << std::endl;
+        }
+        else{
+            posX = 1;
+            posY = 2;
+            std::cout << "El lapiz se ha colocado en la posicion inicial" << std::endl;
+        }
+
     }
 
 
