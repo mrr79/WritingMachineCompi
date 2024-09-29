@@ -31,6 +31,16 @@ public:
     void Down();
     void Up();
     void Beginning();
+    void Equal(const std::string& N1, const std::string& N2);
+    void And(const std::string& N1, const std::string& N2);
+    void Or(const std::string& N1, const std::string& N2);
+    void Greater(const std::string& N1, const std::string& N2);
+    void Smaller(const std::string& N1, const std::string& N2);
+    void Subs(const std::string& N1, const std::string& N2);
+    void Sum(const std::string& N1, const std::string& N2);
+    void Mult(const std::string& N1, const std::string& N2);
+    void Div(const std::string& N1, const std::string& N2);
+    void Random(const std::string& N1, const std::string& N2);
     
 };
 

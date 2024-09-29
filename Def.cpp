@@ -364,9 +364,197 @@ public:
             posY = 2;
             std::cout << "El lapiz se ha colocado en la posicion inicial" << std::endl;
         }
-
     }
 
+    void Equal(const std::string& N1, const std::string& N2){
+        int valor1 = evaluarExpresion(N1);
+        int valor2 = evaluarExpresion(N2);
+        
+        if(valor1==valor2){
+            std::cout << "TRUE" << std::endl;
+        }
+        else{
+            std::cout << "FALSE" << std::endl;
+        }
+    }
+
+    void And(const std::string& N1, const std::string& N2){
+        // Expresión regular que captura las comparaciones con <, >, ==, !=
+        std::regex comparacion_regex(R"(\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*(==|!=|>|<)\s*(\d+|\s*[a-zA-Z_][a-zA-Z0-9_]*)\s*)");
+        std::smatch matchN1, matchN2;
+
+        if (std::regex_match(N1, matchN1, comparacion_regex) && std::regex_match(N2, matchN2, comparacion_regex)) {
+
+            //Para N1
+            std::string v1N1 = matchN1[1].str();      // Parte izquierda (variable o expresión)
+            std::string operadorN1 = matchN1[2].str(); // Operador de comparación (>, <, ==, !=)
+            std::string v2N1 = matchN1[3].str();      // Parte derecha (número o variable)
+            int valor1N1 = evaluarExpresion(v1N1);
+            int valor2N1 = evaluarExpresion(v2N1);
+
+            std::string numero_str1N1 = std::to_string(valor1N1); // Conversión a string
+            std::string numero_str2N1 = std::to_string(valor2N1); // Conversión a string
+            int resultadoN1 = evaluarExpresion(numero_str1N1 + operadorN1 + numero_str2N1);
+
+
+            //Para N2
+            std::string v1N2 = matchN2[1].str();      // Parte izquierda (variable o expresión)
+            std::string operadorN2 = matchN2[2].str(); // Operador de comparación (>, <, ==, !=)
+            std::string v2N2 = matchN2[3].str();      // Parte derecha (número o variable)
+            int valor1N2 = evaluarExpresion(v1N2);
+            int valor2N2 = evaluarExpresion(v2N2);
+
+            std::string numero_str1N2 = std::to_string(valor1N2); // Conversión a string
+            std::string numero_str2N2 = std::to_string(valor2N2); // Conversión a string
+            int resultadoN2 = evaluarExpresion(numero_str1N2 + operadorN2 + numero_str2N2);
+
+            if(resultadoN1==1 && resultadoN2==1){
+                std::cout << "True" << std::endl;
+            }
+            else{
+                std::cout << "False" << std::endl;
+            }
+
+            //std::cout << "Comparacion 1 : " << resultadoN1 << std::endl;
+            //std::cout << "Comparacion 2 : " << resultadoN2 << std::endl;
+
+        } else {
+            int valor1 = evaluarExpresion(N1);
+            int valor2 = evaluarExpresion(N2);
+            
+            if(valor1==1 && valor2==1){
+                std::cout << "TRUE" << std::endl;
+            }
+            else{
+                std::cout << "FALSE" << std::endl;
+            }
+        }
+    }
+
+    void Or(const std::string& N1, const std::string& N2){
+        // Expresión regular que captura las comparaciones con <, >, ==, !=
+        std::regex comparacion_regex(R"(\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*(==|!=|>|<)\s*(\d+|\s*[a-zA-Z_][a-zA-Z0-9_]*)\s*)");
+        std::smatch matchN1, matchN2;
+
+        if (std::regex_match(N1, matchN1, comparacion_regex) && std::regex_match(N2, matchN2, comparacion_regex)) {
+
+            //Para N1
+            std::string v1N1 = matchN1[1].str();      // Parte izquierda (variable o expresión)
+            std::string operadorN1 = matchN1[2].str(); // Operador de comparación (>, <, ==, !=)
+            std::string v2N1 = matchN1[3].str();      // Parte derecha (número o variable)
+            int valor1N1 = evaluarExpresion(v1N1);
+            int valor2N1 = evaluarExpresion(v2N1);
+
+            std::string numero_str1N1 = std::to_string(valor1N1); // Conversión a string
+            std::string numero_str2N1 = std::to_string(valor2N1); // Conversión a string
+            int resultadoN1 = evaluarExpresion(numero_str1N1 + operadorN1 + numero_str2N1);
+
+
+            //Para N2
+            std::string v1N2 = matchN2[1].str();      // Parte izquierda (variable o expresión)
+            std::string operadorN2 = matchN2[2].str(); // Operador de comparación (>, <, ==, !=)
+            std::string v2N2 = matchN2[3].str();      // Parte derecha (número o variable)
+            int valor1N2 = evaluarExpresion(v1N2);
+            int valor2N2 = evaluarExpresion(v2N2);
+
+            std::string numero_str1N2 = std::to_string(valor1N2); // Conversión a string
+            std::string numero_str2N2 = std::to_string(valor2N2); // Conversión a string
+            int resultadoN2 = evaluarExpresion(numero_str1N2 + operadorN2 + numero_str2N2);
+
+            if(resultadoN1==1 || resultadoN2==1){
+                std::cout << "True" << std::endl;
+            }
+            else{
+                std::cout << "False" << std::endl;
+            }
+
+
+            //std::cout << "Comparacion 1 : " << resultadoN1 << std::endl;
+            //std::cout << "Comparacion 2 : " << resultadoN2 << std::endl;
+
+        } else {
+            int valor1 = evaluarExpresion(N1);
+            int valor2 = evaluarExpresion(N2);
+            
+            if(valor1==1 || valor2==1){
+                std::cout << "TRUE" << std::endl;
+            }
+            else{
+                std::cout << "FALSE" << std::endl;
+            }
+        }
+    }
+
+    void Greater(const std::string& N1, const std::string& N2){
+
+        int valor1 = evaluarExpresion(N1);
+        int valor2 = evaluarExpresion(N2);
+        
+        if(valor1>valor2){
+            std::cout << "TRUE" << std::endl;
+        }
+        else{
+            std::cout << "FALSE" << std::endl;
+        }
+    }
+    void Smaller(const std::string& N1, const std::string& N2){
+
+        int valor1 = evaluarExpresion(N1);
+        int valor2 = evaluarExpresion(N2);
+        
+        if(valor1<valor2){
+            std::cout << "TRUE" << std::endl;
+        }
+        else{
+            std::cout << "FALSE" << std::endl;
+        }
+    }
+
+    void Substr(const std::string& N1, const std::string& N2){
+        int valor1 = evaluarExpresion(N1);
+        int valor2 = evaluarExpresion(N2);
+        
+        if(valor1>=valor2){
+            std::cout << "El resultado es: " << valor1-valor2 << std::endl;
+        }
+        else{
+            std::cout << "Error: N1 debe ser mayor a N2" << std::endl;
+        }
+    }
+
+    void Sum(const std::string& N1, const std::string& N2){
+        int valor1 = evaluarExpresion(N1);
+        int valor2 = evaluarExpresion(N2);
+        
+        std::cout << "El resultado es: " << valor1+valor2 << std::endl;
+    }
+
+    void Random(const std::string& n){
+        int valor1 = evaluarExpresion(n);
+
+        // Inicializar la semilla con la hora actual
+        std::srand(static_cast<unsigned int>(std::time(0)));
+
+        // Generar un número aleatorio entre 0 y n
+        int numero_random = std::rand() % (valor1 + 1); // % (n + 1) para incluir n
+
+        // Imprimir el resultado
+        std::cout << "Número aleatorio entre 0 y " << n << ": " << numero_random << std::endl;
+    }
+
+    void Mult(const std::string& N1, const std::string& N2){
+        int valor1 = evaluarExpresion(N1);
+        int valor2 = evaluarExpresion(N2);
+        
+        std::cout << "El resultado es: " << valor1*valor2 << std::endl;
+    }
+
+    void Div(const std::string& N1, const std::string& N2){
+        int valor1 = evaluarExpresion(N1);
+        int valor2 = evaluarExpresion(N2);
+        
+        std::cout << "El resultado es: " << valor1/valor2 << std::endl;
+    }
 
 
 };
