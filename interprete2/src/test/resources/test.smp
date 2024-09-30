@@ -1,0 +1,17 @@
+main() {
+	Def (nombre_variable, 2);
+	Put (identifica, 3);
+	
+	ContinueDown identifica;
+	
+	Add(identifica, nombre_variable);
+	
+	ContinueUp identifica;
+	
+	Pos (2,54); 
+	
+	Up;
+	Down;
+	
+	println And(true,And(true,5>4));
+}
