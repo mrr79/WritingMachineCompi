@@ -1,0 +1,83 @@
+
+/* Estilos generales para todos los botones */
+.button {
+    -fx-background-radius: 15; /* Bordes redondeados */
+    -fx-text-fill: white; /* Color del texto */
+    -fx-font-size: 14px; /* Tamaño de la fuente */
+    -fx-padding: 10 20; /* Espaciado interno */
+    -fx-cursor: hand; /* Cursor de mano al pasar el ratón */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2); /* Sombra */
+}
+.pane{
+    -fx-background-color: #1c1c1c; /* Color grisáceo claro */
+    -fx-padding: 10; /* Espaciado interno */
+}
+.text-area {
+    -fx-background-color: #2a2a2a; /* Fondo grisáceo claro */
+    -fx-text-fill: black; /* Texto blanco */
+    -fx-font-family: 'Courier New'; /* Fuente monoespaciada */
+    -fx-font-size: 12; /* Tamaño de fuente */
+}
+
+/* Estilo para el botón File */
+.fileButton {
+    -fx-background-color: #007BFF; /* Azul */
+}
+
+.fileButton:hover {
+    -fx-background-color: #0056b3; /* Azul más oscuro */
+}
+
+.fileButton:pressed {
+    -fx-background-color: #004085; /* Azul más oscuro al presionar */
+}
+
+/* Estilo para el botón Close */
+.closeButton {
+    -fx-background-color: #dc3545; /* Rojo */
+}
+
+.closeButton:hover {
+    -fx-background-color: #c82333; /* Rojo más oscuro */
+}
+
+.closeButton:pressed {
+    -fx-background-color: #bd2130; /* Rojo más oscuro al presionar */
+}
+
+/* Estilo para el botón Run */
+.runButton {
+    -fx-background-color: #28a745; /* Verde */
+}
+
+.runButton:hover {
+    -fx-background-color: #218838; /* Verde más oscuro */
+}
+
+.runButton:pressed {
+    -fx-background-color: #1e7e34; /* Verde más oscuro al presionar */
+}
+.consoleButton {
+    -fx-background-color: #ffc107; /* Amarillo */
+}
+
+.consoleButton:hover {
+    -fx-background-color: #e0a800; /* Amarillo más oscuro */
+}
+
+.consoleButton:pressed {
+    -fx-background-color: #c69500; /* Amarillo más oscuro al presionar */
+}
+
+/* Aplicando los estilos generales a cada botón */
+.fileButton,
+.closeButton,
+.consoleButton,
+.runButton {
+    -fx-background-radius: 15; /* Bordes redondeados */
+    -fx-text-fill: white; /* Color del texto */
+    -fx-font-size: 14px; /* Tamaño de la fuente */
+    -fx-padding: 10 20; /* Espaciado interno */
+    -fx-cursor: hand; /* Cursor de mano al pasar el ratón */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2); /* Sombra */
+}
