@@ -40,12 +40,14 @@ int main() {
     std::regex and_regex(R"(^\s*And\(\s*(.+?)\s*,\s*(.+?)\s*\)\s*;\s*$)");//Expresion regular para And
     std::regex or_regex(R"(^\s*Or\(\s*(.+?)\s*,\s*(.+?)\s*\)\s*;\s*$)");//Expresion regular para Or
     std::regex greater_regex(R"(^\s*Greater\(\s*(([a-zA-Z_][a-zA-Z0-9_]*|\d+(\.\d+)?)(\s*[\+\-\*/]\s*(\d+(\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*))*)\s*,\s*((([a-zA-Z_][a-zA-Z0-9_]*|\d+(\.\d+)?)(\s*[\+\-\*/]\s*(\d+(\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*))*)?)\s*\)\s*;\s*$)");//Expresion regular para Greater
-    std::regex smaller_regex(R"(^\s*Greater\(\s*(([a-zA-Z_][a-zA-Z0-9_]*|\d+(\.\d+)?)(\s*[\+\-\*/]\s*(\d+(\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*))*)\s*,\s*((([a-zA-Z_][a-zA-Z0-9_]*|\d+(\.\d+)?)(\s*[\+\-\*/]\s*(\d+(\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*))*)?)\s*\)\s*;\s*$)");//Expresion regular para Smaller
+    std::regex smaller_regex(R"(^\s*Smaller\(\s*(([a-zA-Z_][a-zA-Z0-9_]*|\d+(\.\d+)?)(\s*[\+\-\*/]\s*(\d+(\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*))*)\s*,\s*((([a-zA-Z_][a-zA-Z0-9_]*|\d+(\.\d+)?)(\s*[\+\-\*/]\s*(\d+(\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*))*)?)\s*\)\s*;\s*$)");//Expresion regular para Smaller
     std::regex substr_regex(R"(^\s*Substr\(\s*(([a-zA-Z_][a-zA-Z0-9_]*|\d+(\.\d+)?)(\s*[\+\-\*/]\s*(\d+(\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*))*)\s*,\s*((([a-zA-Z_][a-zA-Z0-9_]*|\d+(\.\d+)?)(\s*[\+\-\*/]\s*(\d+(\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*))*)?)\s*\)\s*;\s*$)");//Expresion regular para Smaller
     std::regex sum_regex(R"(^\s*Sum\(\s*(([a-zA-Z_][a-zA-Z0-9_]*|\d+(\.\d+)?)(\s*[\+\-\*/]\s*(\d+(\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*))*)\s*,\s*((([a-zA-Z_][a-zA-Z0-9_]*|\d+(\.\d+)?)(\s*[\+\-\*/]\s*(\d+(\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*))*)?)\s*\)\s*;\s*$)");//Expresion regular para Smaller
     std::regex mult_regex(R"(^\s*Mult\(\s*(([a-zA-Z_][a-zA-Z0-9_]*|\d+(\.\d+)?)(\s*[\+\-\*/]\s*(\d+(\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*))*)\s*,\s*((([a-zA-Z_][a-zA-Z0-9_]*|\d+(\.\d+)?)(\s*[\+\-\*/]\s*(\d+(\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*))*)?)\s*\)\s*;\s*$)");//Expresion regular para Smaller
     std::regex div_regex(R"(^\s*Div\(\s*(([a-zA-Z_][a-zA-Z0-9_]*|\d+(\.\d+)?)(\s*[\+\-\*/]\s*(\d+(\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*))*)\s*,\s*((([a-zA-Z_][a-zA-Z0-9_]*|\d+(\.\d+)?)(\s*[\+\-\*/]\s*(\d+(\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*))*)?)\s*\)\s*;\s*$)");//Expresion regular para Smaller
     std::regex random_regex(R"(^\s*Random\(\s*([a-zA-Z_][a-zA-Z0-9_]*|\d+(\s*[\+\-\*/]\s*\d+)*)\s*\);\s*$)"); //Expresion regular para Random(n)
+    std::regex for_regex(R"(FOR\s+([a-zA-Z_][a-zA-Z0-9_]*)\((\d+)\s+to\s+(\d+)\)\s+LOOP\s*\[([^\]]*)\]\s*END\s+LOOP;)"); //Expresion regular para For
+
 
 
 
@@ -113,29 +115,10 @@ int main() {
         else if (std::regex_match(input, match, and_regex)) {
             std::string N1 = match[1].str();
             std::string N2 = match[2].str();
-            std::cout << N1 << std::endl;
-            std::cout << N2 << std::endl;
+
+            std::cout << "Primera comparacion "<< N1 << std::endl;
+            std::cout << "Segunda comparacion "<< N2 << std::endl;
             
-            /*
-            std::string N3 = match[1].str();
-            std::string N4 = match[2].str();
-            std::string N5 = match[3].str();
-            std::string N6 = match[4].str();
-            std::string N7 = match[5].str();
-            std::string N8 = match[6].str();
-            std::string N9 = match[7].str();
-            std::string N10 = match[8].str();
-
-            std::cout << N3 << std::endl;
-            std::cout << N4 << std::endl;
-            std::cout << N5 << std::endl;
-            std::cout << N6 << std::endl;
-            std::cout << N7 << std::endl;
-            std::cout << N8 << std::endl;
-            std::cout << N9 << std::endl;
-            std::cout << N10 << std::endl;
-            */
-
             manager.And(N1, N2);  
         }
         else if (std::regex_match(input, match, or_regex)) {
@@ -177,6 +160,14 @@ int main() {
         else if (std::regex_match(input, match, random_regex)) {
             std::string n = match[1].str();
             manager.Random(n);  
+        }
+        else if (std::regex_match(input, match, for_regex)) {
+            std::string variable = match[1].str();
+            std::string min = match[2].str();
+            std::string max = match[3].str();
+            std::string sentencias = match[4].str();
+            manager.Foor(variable, min, max, sentencias, posX, posY, lapiz);
+             
         }
          else {
             std::cout << "Comando no reconocido.\n";

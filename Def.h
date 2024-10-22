@@ -41,6 +41,7 @@ public:
     void Mult(const std::string& N1, const std::string& N2);
     void Div(const std::string& N1, const std::string& N2);
     void Random(const std::string& N1, const std::string& N2);
+    void Random(const std::string& expresion);
     
 };
 

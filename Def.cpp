@@ -3,6 +3,8 @@
 #include <string>
 #include <regex> // Necesario para usar expresiones regulares
 #include "exprtk.hpp"
+#include <vector>
+#include <boost/algorithm/string.hpp>  // Incluye Boost
 
 // Enum para definir los tipos de datos
 enum class DataType { Numero, Logico };
@@ -383,45 +385,81 @@ public:
         std::regex comparacion_regex(R"(\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*(==|!=|>|<)\s*(\d+|\s*[a-zA-Z_][a-zA-Z0-9_]*)\s*)");
         std::smatch matchN1, matchN2;
 
-        if (std::regex_match(N1, matchN1, comparacion_regex) && std::regex_match(N2, matchN2, comparacion_regex)) {
+        if (std::regex_match(N1, matchN1, comparacion_regex)) {
 
             //Para N1
             std::string v1N1 = matchN1[1].str();      // Parte izquierda (variable o expresión)
             std::string operadorN1 = matchN1[2].str(); // Operador de comparación (>, <, ==, !=)
             std::string v2N1 = matchN1[3].str();      // Parte derecha (número o variable)
+
             int valor1N1 = evaluarExpresion(v1N1);
             int valor2N1 = evaluarExpresion(v2N1);
 
             std::string numero_str1N1 = std::to_string(valor1N1); // Conversión a string
+            
             std::string numero_str2N1 = std::to_string(valor2N1); // Conversión a string
+            
             int resultadoN1 = evaluarExpresion(numero_str1N1 + operadorN1 + numero_str2N1);
+            
 
+            if (std::regex_match(N2, matchN2, comparacion_regex)){
 
-            //Para N2
-            std::string v1N2 = matchN2[1].str();      // Parte izquierda (variable o expresión)
-            std::string operadorN2 = matchN2[2].str(); // Operador de comparación (>, <, ==, !=)
-            std::string v2N2 = matchN2[3].str();      // Parte derecha (número o variable)
-            int valor1N2 = evaluarExpresion(v1N2);
-            int valor2N2 = evaluarExpresion(v2N2);
-
-            std::string numero_str1N2 = std::to_string(valor1N2); // Conversión a string
-            std::string numero_str2N2 = std::to_string(valor2N2); // Conversión a string
-            int resultadoN2 = evaluarExpresion(numero_str1N2 + operadorN2 + numero_str2N2);
-
-            if(resultadoN1==1 && resultadoN2==1){
+                //Para N2
+                std::string v1N2 = matchN2[1].str();      // Parte izquierda (variable o expresión)
+                
+                std::string operadorN2 = matchN2[2].str(); // Operador de comparación (>, <, ==, !=)
+                std::string v2N2 = matchN2[3].str();      // Parte derecha (número o variable)
+                
+                int valor1N2 = evaluarExpresion(v1N2);
+            
+                int valor2N2 = evaluarExpresion(v2N2);
+            
+                std::string numero_str1N2 = std::to_string(valor1N2); // Conversión a string
+                
+                std::string numero_str2N2 = std::to_string(valor2N2); // Conversión a string
+                
+                int resultadoN2 = evaluarExpresion(numero_str1N2 + operadorN2 + numero_str2N2);
+                
+                if(resultadoN1==1 && resultadoN2==1){
                 std::cout << "True" << std::endl;
+                }else{
+                    std::cout << "False" << std::endl;
+                }
             }
             else{
-                std::cout << "False" << std::endl;
-            }
+                int valor2 = evaluarExpresion(N2);
+                if(resultadoN1==1 && valor2==1){
+                std::cout << "TRUE" << std::endl;
+                }else{
+                    std::cout << "FALSE" << std::endl;
+                }
+            }        
 
-            //std::cout << "Comparacion 1 : " << resultadoN1 << std::endl;
-            //std::cout << "Comparacion 2 : " << resultadoN2 << std::endl;
+        }
+        
+        else if (std::regex_match(N2, matchN2, comparacion_regex)) {
 
-        } else {
+            //Para N2
+            std::string v1N2 = matchN1[1].str();      // Parte izquierda (variable o expresión)
+            std::string operadorN2 = matchN1[2].str(); // Operador de comparación (>, <, ==, !=)
+            std::string v2N2 = matchN1[3].str();      // Parte derecha (número o variable)
+
+            int valor1N2 = evaluarExpresion(v1N2);
+            int valor2N2 = evaluarExpresion(v2N2);
+            std::string numero_str1N2 = std::to_string(valor1N2); // Conversión a string          
+            std::string numero_str2N2 = std::to_string(valor2N2); // Conversión a string         
+            int resultadoN2 = evaluarExpresion(numero_str1N2 + operadorN2 + numero_str2N2);
             int valor1 = evaluarExpresion(N1);
-            int valor2 = evaluarExpresion(N2);
-            
+            if(valor1==1 && resultadoN2==1){
+                std::cout << "TRUE" << std::endl;
+            }
+            else{
+                std::cout << "FALSE" << std::endl;
+            }
+        }
+         else {          
+            int valor1 = evaluarExpresion(N1);
+            int valor2 = evaluarExpresion(N2); 
             if(valor1==1 && valor2==1){
                 std::cout << "TRUE" << std::endl;
             }
@@ -436,46 +474,81 @@ public:
         std::regex comparacion_regex(R"(\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*(==|!=|>|<)\s*(\d+|\s*[a-zA-Z_][a-zA-Z0-9_]*)\s*)");
         std::smatch matchN1, matchN2;
 
-        if (std::regex_match(N1, matchN1, comparacion_regex) && std::regex_match(N2, matchN2, comparacion_regex)) {
+        if (std::regex_match(N1, matchN1, comparacion_regex)) {
 
             //Para N1
             std::string v1N1 = matchN1[1].str();      // Parte izquierda (variable o expresión)
             std::string operadorN1 = matchN1[2].str(); // Operador de comparación (>, <, ==, !=)
             std::string v2N1 = matchN1[3].str();      // Parte derecha (número o variable)
+
             int valor1N1 = evaluarExpresion(v1N1);
             int valor2N1 = evaluarExpresion(v2N1);
 
             std::string numero_str1N1 = std::to_string(valor1N1); // Conversión a string
+            
             std::string numero_str2N1 = std::to_string(valor2N1); // Conversión a string
+            
             int resultadoN1 = evaluarExpresion(numero_str1N1 + operadorN1 + numero_str2N1);
+            
 
+            if (std::regex_match(N2, matchN2, comparacion_regex)){
 
-            //Para N2
-            std::string v1N2 = matchN2[1].str();      // Parte izquierda (variable o expresión)
-            std::string operadorN2 = matchN2[2].str(); // Operador de comparación (>, <, ==, !=)
-            std::string v2N2 = matchN2[3].str();      // Parte derecha (número o variable)
-            int valor1N2 = evaluarExpresion(v1N2);
-            int valor2N2 = evaluarExpresion(v2N2);
-
-            std::string numero_str1N2 = std::to_string(valor1N2); // Conversión a string
-            std::string numero_str2N2 = std::to_string(valor2N2); // Conversión a string
-            int resultadoN2 = evaluarExpresion(numero_str1N2 + operadorN2 + numero_str2N2);
-
-            if(resultadoN1==1 || resultadoN2==1){
+                //Para N2
+                std::string v1N2 = matchN2[1].str();      // Parte izquierda (variable o expresión)
+                
+                std::string operadorN2 = matchN2[2].str(); // Operador de comparación (>, <, ==, !=)
+                std::string v2N2 = matchN2[3].str();      // Parte derecha (número o variable)
+                
+                int valor1N2 = evaluarExpresion(v1N2);
+            
+                int valor2N2 = evaluarExpresion(v2N2);
+            
+                std::string numero_str1N2 = std::to_string(valor1N2); // Conversión a string
+                
+                std::string numero_str2N2 = std::to_string(valor2N2); // Conversión a string
+                
+                int resultadoN2 = evaluarExpresion(numero_str1N2 + operadorN2 + numero_str2N2);
+                
+                if(resultadoN1==1 || resultadoN2==1){
                 std::cout << "True" << std::endl;
+                }else{
+                    std::cout << "False" << std::endl;
+                }
             }
             else{
-                std::cout << "False" << std::endl;
-            }
+                int valor2 = evaluarExpresion(N2);
+                if(resultadoN1==1 || valor2==1){
+                std::cout << "TRUE" << std::endl;
+                }else{
+                    std::cout << "FALSE" << std::endl;
+                }
+            }        
 
+        }
+        
+        else if (std::regex_match(N2, matchN2, comparacion_regex)) {
 
-            //std::cout << "Comparacion 1 : " << resultadoN1 << std::endl;
-            //std::cout << "Comparacion 2 : " << resultadoN2 << std::endl;
+            //Para N2
+            std::string v1N2 = matchN1[1].str();      // Parte izquierda (variable o expresión)
+            std::string operadorN2 = matchN1[2].str(); // Operador de comparación (>, <, ==, !=)
+            std::string v2N2 = matchN1[3].str();      // Parte derecha (número o variable)
 
-        } else {
+            int valor1N2 = evaluarExpresion(v1N2);
+            int valor2N2 = evaluarExpresion(v2N2);
+            std::string numero_str1N2 = std::to_string(valor1N2); // Conversión a string          
+            std::string numero_str2N2 = std::to_string(valor2N2); // Conversión a string         
+            int resultadoN2 = evaluarExpresion(numero_str1N2 + operadorN2 + numero_str2N2);
             int valor1 = evaluarExpresion(N1);
-            int valor2 = evaluarExpresion(N2);
-            
+            if(valor1==1 || resultadoN2==1){
+                std::cout << "TRUE" << std::endl;
+            }
+            else{
+                std::cout << "FALSE" << std::endl;
+            }
+        }
+         else {          
+            int valor1 = evaluarExpresion(N1);
+            int valor2 = evaluarExpresion(N2); 
             if(valor1==1 || valor2==1){
                 std::cout << "TRUE" << std::endl;
             }
@@ -556,8 +629,31 @@ public:
         std::cout << "El resultado es: " << valor1/valor2 << std::endl;
     }
 
+    void Foor(const std::string& variable, const std::string& minimo,const std::string& maxixmo, const std::string& sentencias, int& posX, int& posY,int& lapiz){
+        //FOR var1(1 to 5) LOOP [PoxY Add(var2, var1); ContinueRight(9);] END LOOP;
+        auto it = variables.find(variable);
+        if (it == variables.end()) {
+            Def(variable, minimo);
+            std::cout << sentencias<< std::endl;
+            std::vector<std::string> partes;
+            // Usar boost::split para dividir el string
+            boost::split(partes, sentencias, boost::is_any_of(";"));
+
+            // Imprimir los resultados
+            for (const auto& parte : partes) {
+                if (!parte.empty()) {  // Ignorar las partes vacías
+                    std::cout << parte + ";"<< std::endl;
+                    //int result = iteraciones(parte + ";", posX, posY, lapiz);
+                }
+            }
+            
+            return;
+        }
+        std::cerr << "Error: La variable que se quiere usar como identificador ya existe.\n";
+    }
 
 };
 
 // Instancia global de VariableManager para que sea accesible desde el main
 VariableManager manager;
+VariableManager manager2;
