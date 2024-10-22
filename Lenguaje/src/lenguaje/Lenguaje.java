@@ -14,7 +14,15 @@ public class Lenguaje {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        Funciones manager = new Funciones();
+        
+        // Definir una variable con nombre y valor
+        manager.Def("miVar", "10"); // Definir una variable numérica
+        manager.Def("variable2", "TRUE"); // Definir una variable lógica
+        
+        manager.Put("miVar", "100"); // miVar tendrá el valor 100
+        
     }
     
 }
