@@ -25,7 +25,7 @@ n1:
     | operacion
     | BOOLEAN;
 //ES LO MISMO QUE N1, SOLO POR COMO ESTA REDACTADO LA ESPECIFIC, N2 CONSIDERA ADEMAS LAS VARIABLES
-n2:
+n2: //numeros variables u operaciones
     NUMBER
     | operacion
     | ID;
@@ -34,6 +34,7 @@ n3:
     NUMBER
     | ID;
 n4: //para los operadores logicos, QUEDA PENDIENTE ARREGLAR SI SOLO USAR N2 O SI USAR N4 EN LOS OP LOGICOS
+   //utilzia numeros operaciones variables o boolean
     NUMBER
     | operacion
     | ID
@@ -41,6 +42,9 @@ n4: //para los operadores logicos, QUEDA PENDIENTE ARREGLAR SI SOLO USAR N2 O SI
 n5:
     NUMBER
     | ID
+    | BOOLEAN;
+n6:
+    NUMBER
     | BOOLEAN;
 
 //considere las operaciones como add, substr,equal,and,or,greater,smaller,random,mult,div
@@ -83,7 +87,7 @@ random://random usa un numero o una variable
 mult:
 	MULTO PAR_OPEN n3 COLON n2 PAR_CLOSE SEMICOLON;
 //regla de la division , similar a la multiplicacion
-div:
+div: //n3 son numeros o variables, n2 numeros variables u operaciones
 	DIVO PAR_OPEN n3 COLON n2 PAR_CLOSE SEMICOLON;
 //REGLAS LOGICAS(usan n4)******************************************************************************
 //regla del and: NO RECONOCE AND(TRUE,TRUE) AND(TRUE,FALSE)
@@ -107,7 +111,7 @@ continueright:
 continueleft:
 	CLEFT n2 SEMICOLON;
 
-pos:
+pos://mueve el puntero a una posicion x,y
 	POS PAR_OPEN n2 COLON n2 PAR_CLOSE SEMICOLON;
 
 posx:
@@ -144,71 +148,38 @@ sentencia:
 forloop:
     FOR ID PAR_OPEN NUMBER TO NUMBER PAR_CLOSE LOOP P_OPEN sentencia+ P_CLOSE END LOOP SEMICOLON;
 //para los whiles
-whiles:
-    WHILE P_OPEN  P_CLOSE P_OPEN sentencia+ P_CLOSE WHEND SEMICOLON;
+whiles: //no utiliza boleanos para no aceptar ciclos infinitos.
+    WHILE P_OPEN n2 P_CLOSE P_OPEN sentencia+ P_CLOSE WHEND SEMICOLON;
+repeat:
+    REPEAT P_OPEN sentencia+ P_CLOSE UNTIL P_CLOSE n2 P_CLOSE SEMICOLON;
+
+//
 cicase://ciclos del case 2 Then [ Add(var2, 1) ]
-    n5 THEN sentencia ;
+   WHEN n6 THEN P_OPEN  sentencia P_CLOSE  ;
 case:
-    CASE ID WHEN cicase+ END CASE SEMICOLON
-    |CASE ID WHEN cicase+ ELSE cicase END CASE;
+    CASE ID  cicase+ END CASE SEMICOLON
+    |CASE ID cicase+ ELSE P_OPEN  sentencia+ P_CLOSE  END CASE SEMICOLON;
 //******************************************************************************
-program: sentence*;
+//DEFINICIONES DE REGLAS  NECESARIAS PARA LA ESTRUCTURA GENERAL DEL CODIGO***
+listpar://lista de parametros
+    n5 (COLON n5)*;  // Lista de n5 separados por comas, siempre tiene un n5 y puede venir 0 o muchos coma n5
+listinst://lista de instrucciones:
+    define
+    | operacion
+    | sentencia
+    |forloop
+    |whiles
+    |case
+    |repeat
+    |procedure;
 
-main: MAIN PAR_OPEN PAR_CLOSE P_OPEN sentence* P_CLOSE;
+//DEFINICION DE PROCEDIMIENTOS
+procedure:
+    PROC ID PAR_OPEN  listpar? PAR_CLOSE P_OPEN listinst+ P_CLOSE SEMICOLON END SEMICOLON ;
 
-comments: COM ID*;
-calls: CALL ID PAR_OPEN varial* PAR_CLOSE SEMICOLON;
-proc: PROC ID PAR_OPEN varial* PAR_CLOSE P_OPEN sentence* P_CLOSE SEMICOLON ENDMIN SEMICOLON;
 
-varial: ID COLON varial | ID;
-
-right: RIGHT sentence | RIGHT values;
-left: LEFT sentence | LEFT values;
-
-sentence:
-define
-| put
-| add
-| continueup
-| continuedown
-| continueright
-| continueleft
-| pos
-| posx
-| posy
-| color
-| down
-| up
-| beggining
-| fory
-| cases
-| repeat
-| whiles
-| comments
-| main
-| calls
-| proc
-| right
-| left
-| SEMICOLON
-;
-
-operation:
-	logical
-	| substr
-	| random
-	| mult
-	| div
-	| sum
-	;
-
-logical:
-	equal
-	| and
-	| or
-	| greater
-	| smaller
-	;
+main: MAIN PAR_OPEN P_OPEN procedure+ P_CLOSE PAR_CLOSE SEMICOLON END;
+comments: COM ;
 
 
 
@@ -218,41 +189,6 @@ logical:
 
 
 
-beggining: BEG SEMICOLON;
-
-fory: FOR ID PAR_OPEN NUMBER TO NUMBER PAR_CLOSE LOOP P_OPEN sentence* P_CLOSE END LOOP SEMICOLON;
-
-cases: CASE ID when* elses* END CASE SEMICOLON;
-
-when: WHEN logic THEN P_OPEN sentence* P_CLOSE;
-
-elses: ELSE P_OPEN sentence* P_CLOSE;
-
-repeat: REPEAT P_OPEN sentence* P_CLOSE UNTIL P_OPEN repeadtcond P_CLOSE SEMICOLON;
-
-whiles: WHILE P_OPEN repeadtcond P_CLOSE P_OPEN sentence* P_CLOSE WHEND SEMICOLON;
-
-repeadtcond: num equations num
-	| logical;
-
-cond:
-	| num equations num
-	| logical
-	| BOOLEAN
-	| ID;
-
-equations:
-	GT
-	| LT
-	| GEQ
-	| LEQ
-	| EQ
-	| NEQ
-	| ASSIGN;
-values:
-	expression
-	| ID
-	| operation;
 
 
 
@@ -260,32 +196,29 @@ values:
 
 
 
-expression:
-	factor (PLUS factor)* (MINUS t2=factor)*
-	| factor (MINUS t2=factor)* (PLUS factor)*;
-
-factor:
-	term (MULT term)* (DIV term)*
-	| term (DIV term)* (MULT term)*
-	;
-
-term:
-	NUMBER
-	| ID;
 
 
 
-num:
-	NUMBER
-	| BOOLEAN
-	| ID;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 MAIN: 'main';
 PRINTLN: 'println';
 CALL: 'call';
 PROC: 'Proc';
-
-COM: '//';
+//definicion de los skip
+COM: '//' ~[\r\n]* -> skip;
 RIGHT: 'TurnRight';
 LEFT: 'TurnLeft';
 
