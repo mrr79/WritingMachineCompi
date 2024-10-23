@@ -60,10 +60,26 @@ public class Funciones {
             System.err.println("Error: Valor no asignado correctamente.");
             return;
         }
+        
+        var.valor = valor;
 
         // Añadir la nueva variable al mapa
         variables.put(nombreVariable, var);
         System.out.println("Variable " + nombreVariable + " definida correctamente con valor " + valor + ".");
+    }
+    
+    public void Serch(String nombreVariable){
+        
+        Variable varExistente = variables.get(nombreVariable);
+        if (varExistente != null) {
+            System.out.println("La variable si existe y este es su valor " + varExistente.valor);
+           
+        }
+        else{
+            System.err.println("La variable no existe");
+        }
+        
+        
     }
     
     
@@ -86,11 +102,60 @@ public class Funciones {
             var.valor = String.valueOf(resultado);
             System.out.println("Variable " + nombreVariable + " actualizada con el resultado de la operación: " + var.valor + ".");
         } else {
+            System.out.print("Este es el valor de la variable antes del put "+ var.valor);
             // Si el valor es un número directamente, se actualiza
             var.valor = valor;
             System.out.println("Variable " + nombreVariable + " actualizada correctamente con valor " + valor + ".");
         }
     }
+    
+    // Método para incrementar el valor de una variable
+    public void Add(String nombreVariable, String incremento) {
+        Variable var = variables.get(nombreVariable);
+        if (var == null) {
+            System.err.println("Error: La variable " + nombreVariable + " no existe.");
+            return;
+        }
+
+        // Verificar si la variable es de tipo número
+        if (var.tipo != DataType.Numero) {
+            System.err.println("Error semántico: Solo se pueden incrementar variables numéricas.");
+            return;
+        }
+        
+        System.out.print("Este es el valor de " +nombreVariable + var.valor);
+
+        // Obtener el valor actual de la variable
+        int valorActual = Integer.parseInt(var.valor);
+        int incrementoValor;
+
+        // Verificar si el incremento es un número o una variable
+        if (Character.isDigit(incremento.charAt(0))) {
+            incrementoValor = Integer.parseInt(incremento);
+        } else {
+            Variable varIncremento = variables.get(incremento);
+            if (varIncremento == null) {
+                System.err.println("Error: La variable " + incremento + " no existe.");
+                return;
+            }
+            if (varIncremento.tipo != DataType.Numero) {
+                System.err.println("Error semántico: El incremento debe ser un número o una variable numérica.");
+                return;
+            }
+            incrementoValor = Integer.parseInt(varIncremento.valor);
+        }
+
+        // Realizar el incremento
+        valorActual += incrementoValor;
+        var.valor = String.valueOf(valorActual);
+        System.out.println("Variable " + nombreVariable + " incrementada correctamente. Nuevo valor: " + var.valor + ".");
+    }
+
+    // Sobrecarga del método Add para el valor por defecto de 1
+    public void Add(String nombreVariable) {
+        Add(nombreVariable, "1");
+    }
+    
     
     
 }
