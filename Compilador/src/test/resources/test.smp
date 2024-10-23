@@ -1,0 +1,35 @@
+program miprograma {
+	Def (nombre_variable, 2);
+	Put (identifica, 3);
+	Add (N1);
+	Add(N1,N2);
+	ContinueUp n;
+	ContinueDown n;
+	ContinueRight n;
+	ContinueLeft n;
+
+	Pos(X,Y);
+
+	PosX n;
+	PosY n;
+	UseColor 1;
+	Down;
+	Up;
+	Beginning;
+	For variable(1 to 2) Loop [ Def (nombre_variable, 2); ] End Loop;
+
+	Case variable When 2 Then [ Def (nombre_variable, 2); ] End Case;
+
+	Repeat [ Def (nombre_variable, 2); ] Until  [ bucle == 2] ;
+
+	Equal(N1,N2)
+	And(N1,N2)
+	Or(N1, N2)
+	Greater(N1,N2)
+	Smaller(N1, N2)
+	Substr(N1, N2)
+	Random(n)
+	Mult(N1, N2)
+	Div (N1, N2)
+	Sum(N1, N2)
+}
