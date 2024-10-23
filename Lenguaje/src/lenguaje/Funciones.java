@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package lenguaje;
 
 import java.util.HashMap;
@@ -155,7 +151,68 @@ public class Funciones {
     public void Add(String nombreVariable) {
         Add(nombreVariable, "1");
     }
-    
-    
-    
+
+    // Métodos agregados: Equal y And
+
+    // Función Equal para comparar dos expresiones o valores
+    public boolean Equal(String N1, String N2) {
+        int valor1 = evaluarExpresion(N1);
+        int valor2 = evaluarExpresion(N2);
+        return valor1 == valor2;
+    }
+
+    // Función And para evaluar dos condiciones
+    public boolean And(String N1, String N2) {
+        int resultadoN1 = evaluarExpresion(N1);
+        int resultadoN2 = evaluarExpresion(N2);
+        return resultadoN1 == 1 && resultadoN2 == 1;
+    }
+
+    // Función auxiliar para evaluar una expresión (operaciones básicas y comparaciones)
+    private int evaluarExpresion(String expresion) {
+        // Regex para detectar comparaciones (>, <, ==, !=)
+        Pattern comparacionPattern = Pattern.compile("\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(==|!=|>|<)\\s*(\\d+|\\s*[a-zA-Z_][a-zA-Z0-9_]*)\\s*");
+        Matcher matcher = comparacionPattern.matcher(expresion);
+
+        if (matcher.matches()) {
+            String v1 = matcher.group(1);
+            String operador = matcher.group(2);
+            String v2 = matcher.group(3);
+
+            int valor1 = evaluarVariable(v1);
+            int valor2 = evaluarVariable(v2);
+
+            // Evaluar la comparación
+            switch (operador) {
+                case "==":
+                    return valor1 == valor2 ? 1 : 0;
+                case "!=":
+                    return valor1 != valor2 ? 1 : 0;
+                case ">":
+                    return valor1 > valor2 ? 1 : 0;
+                case "<":
+                    return valor1 < valor2 ? 1 : 0;
+                default:
+                    return 0;
+            }
+        } else {
+            // Si no es una comparación, evaluamos la variable o valor directamente
+            return evaluarVariable(expresion);
+        }
+    }
+
+    // Función para evaluar variables o valores
+    private int evaluarVariable(String expresion) {
+        try {
+            return Integer.parseInt(expresion.trim()); // Intentar convertir a número
+        } catch (NumberFormatException e) {
+            Variable var = variables.get(expresion);
+            if (var != null && var.tipo == DataType.Numero) {
+                return Integer.parseInt(var.valor); // Evaluar variable de tipo número
+            } else {
+                System.err.println("Error: La variable " + expresion + " no existe o no es de tipo Número.");
+                return 0;
+            }
+        }
+    }
 }
