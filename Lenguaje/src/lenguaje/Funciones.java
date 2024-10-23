@@ -1,9 +1,16 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package lenguaje;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 /**
  *
@@ -152,67 +159,154 @@ public class Funciones {
         Add(nombreVariable, "1");
     }
 
-    // Métodos agregados: Equal y And
-
-    // Función Equal para comparar dos expresiones o valores
-    public boolean Equal(String N1, String N2) {
+    public void Equal(String N1, String N2) {
+        // Evaluar las dos expresiones
         int valor1 = evaluarExpresion(N1);
         int valor2 = evaluarExpresion(N2);
-        return valor1 == valor2;
-    }
-
-    // Función And para evaluar dos condiciones
-    public boolean And(String N1, String N2) {
-        int resultadoN1 = evaluarExpresion(N1);
-        int resultadoN2 = evaluarExpresion(N2);
-        return resultadoN1 == 1 && resultadoN2 == 1;
-    }
-
-    // Función auxiliar para evaluar una expresión (operaciones básicas y comparaciones)
-    private int evaluarExpresion(String expresion) {
-        // Regex para detectar comparaciones (>, <, ==, !=)
-        Pattern comparacionPattern = Pattern.compile("\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(==|!=|>|<)\\s*(\\d+|\\s*[a-zA-Z_][a-zA-Z0-9_]*)\\s*");
-        Matcher matcher = comparacionPattern.matcher(expresion);
-
-        if (matcher.matches()) {
-            String v1 = matcher.group(1);
-            String operador = matcher.group(2);
-            String v2 = matcher.group(3);
-
-            int valor1 = evaluarVariable(v1);
-            int valor2 = evaluarVariable(v2);
-
-            // Evaluar la comparación
-            switch (operador) {
-                case "==":
-                    return valor1 == valor2 ? 1 : 0;
-                case "!=":
-                    return valor1 != valor2 ? 1 : 0;
-                case ">":
-                    return valor1 > valor2 ? 1 : 0;
-                case "<":
-                    return valor1 < valor2 ? 1 : 0;
-                default:
-                    return 0;
-            }
+        
+        // Comparar los valores
+        if (valor1 == valor2) {
+            System.out.println("TRUE");
         } else {
-            // Si no es una comparación, evaluamos la variable o valor directamente
-            return evaluarVariable(expresion);
+            System.out.println("FALSE");
+        }
+    }
+    
+    public void And(String N1, String N2) {
+        // Expresión regular que captura las comparaciones con <, >, ==, !=
+        Pattern comparacionRegex = Pattern.compile("\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(==|!=|>|<)\\s*(\\d+|\\s*[a-zA-Z_][a-zA-Z0-9_]*)\\s*");
+        Matcher matchN1 = comparacionRegex.matcher(N1);
+        Matcher matchN2 = comparacionRegex.matcher(N2);
+
+        boolean resultadoN1 = false;
+        boolean resultadoN2 = false;
+
+        if (matchN1.matches()) {
+            // Para N1
+            String v1N1 = matchN1.group(1);  // Parte izquierda (variable o expresión)
+            String operadorN1 = matchN1.group(2);  // Operador de comparación (>, <, ==, !=)
+            String v2N1 = matchN1.group(3);  // Parte derecha (número o variable)
+
+            int valor1N1 = evaluarExpresion(v1N1);
+            int valor2N1 = evaluarExpresion(v2N1);
+
+            // Aquí evaluamos la operación de comparación entre los valores de N1
+            resultadoN1 = evaluarComparacion(valor1N1, operadorN1, valor2N1);
+        } else {
+            resultadoN1 = (evaluarExpresion(N1) == 1);
+        }
+
+        if (matchN2.matches()) {
+            // Para N2
+            String v1N2 = matchN2.group(1);  // Parte izquierda (variable o expresión)
+            String operadorN2 = matchN2.group(2);  // Operador de comparación (>, <, ==, !=)
+            String v2N2 = matchN2.group(3);  // Parte derecha (número o variable)
+
+            int valor1N2 = evaluarExpresion(v1N2);
+            int valor2N2 = evaluarExpresion(v2N2);
+
+            // Aquí evaluamos la operación de comparación entre los valores de N2
+            resultadoN2 = evaluarComparacion(valor1N2, operadorN2, valor2N2);
+        } else {
+            resultadoN2 = (evaluarExpresion(N2) == 1);
+        }
+
+        // Resultado final de la operación AND
+        if (resultadoN1 && resultadoN2) {
+            System.out.println("TRUE");
+        } else {
+            System.out.println("FALSE");
         }
     }
 
-    // Función para evaluar variables o valores
-    private int evaluarVariable(String expresion) {
-        try {
-            return Integer.parseInt(expresion.trim()); // Intentar convertir a número
-        } catch (NumberFormatException e) {
+    // Método para evaluar comparaciones entre dos valores
+    private boolean evaluarComparacion(int valor1, String operador, int valor2) {
+        switch (operador) {
+            case "==":
+                return valor1 == valor2;
+            case "!=":
+                return valor1 != valor2;
+            case ">":
+                return valor1 > valor2;
+            case "<":
+                return valor1 < valor2;
+            default:
+                System.err.println("Operador desconocido: " + operador);
+                return false;
+        }
+    }
+
+    private int evaluarExpresion(String expresion) {
+        // Expresiones regulares para números, variables y comparaciones
+        Pattern numberRegex = Pattern.compile("\\d+"); // Para números
+        Pattern variableRegex = Pattern.compile("[a-zA-Z_][a-zA-Z0-9_]*"); // Para variables
+        Pattern comparisonRegex = Pattern.compile("(\\d+|[a-zA-Z_][a-zA-Z0-9_]*)\\s*(==|!=|>|<)\\s*(\\d+|[a-zA-Z_][a-zA-Z0-9_]*)"); // Para comparaciones
+    
+        // Si la expresión es un número
+        if (numberRegex.matcher(expresion).matches()) {
+            return Integer.parseInt(expresion);
+        }
+    
+        // Si la expresión es un valor booleano
+        if (expresion.equals("TRUE")) {
+            return 1;
+        }
+        if (expresion.equals("FALSE")) {
+            return 0;
+        }
+    
+        // Si la expresión es una comparación
+        Matcher comparisonMatcher = comparisonRegex.matcher(expresion);
+        if (comparisonMatcher.matches()) {
+            // Obtener los dos lados de la comparación y el operador
+            String left = comparisonMatcher.group(1);
+            String operator = comparisonMatcher.group(2);
+            String right = comparisonMatcher.group(3);
+    
+            // Evaluar las dos partes (pueden ser números o variables)
+            int leftValue = evaluarExpresion(left);
+            int rightValue = evaluarExpresion(right);
+    
+            // Realizar la comparación
+            switch (operator) {
+                case "==":
+                    return leftValue == rightValue ? 1 : 0;
+                case "!=":
+                    return leftValue != rightValue ? 1 : 0;
+                case ">":
+                    return leftValue > rightValue ? 1 : 0;
+                case "<":
+                    return leftValue < rightValue ? 1 : 0;
+                default:
+                    System.err.println("Operador desconocido: " + operator);
+                    return 0;
+            }
+        }
+    
+        // Si la expresión es una variable
+        Matcher variableMatcher = variableRegex.matcher(expresion);
+        if (variableMatcher.matches()) {
             Variable var = variables.get(expresion);
-            if (var != null && var.tipo == DataType.Numero) {
-                return Integer.parseInt(var.valor); // Evaluar variable de tipo número
+            if (var != null) {
+                if (var.tipo == DataType.Numero) {
+                    return Integer.parseInt(var.valor);
+                } else if (var.tipo == DataType.Logico) {
+                    return var.valor.equals("TRUE") ? 1 : 0;
+                } else {
+                    System.err.println("Error: La variable " + expresion + " no es de tipo numérico ni lógico.");
+                    return 0;
+                }
             } else {
-                System.err.println("Error: La variable " + expresion + " no existe o no es de tipo Número.");
+                System.err.println("Error: Variable no encontrada: " + expresion);
                 return 0;
             }
         }
+    
+        // Si la expresión no es válida
+        System.err.println("Error: Expresión inválida: " + expresion);
+        return 0;
     }
+
+    
 }
+    
