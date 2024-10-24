@@ -58,5 +58,41 @@ public class Lenguaje {
 
         System.out.println("Caso 3: Equal(var1, 2 * 5)");
         manager.Equal("var1", "2 * 5"); //
+
+        System.out.println("Caso 1: Or(10 > 2, 2 > 5)");
+        manager.Or("10 > 2", "2 > 5"); // TRUE
+
+        System.out.println("Caso 2: Or(10 > 2, 5 > 1)");
+        manager.Or("10 > 2", "5 > 1"); // TRUE
+
+        System.out.println("Caso 3: Or(2 > 10, 1 > 5)");
+        manager.Or("2 > 10", "1 > 5"); // FALSE
+
+        System.out.println("Caso 4: Or(miVar > 5, TRUE)");
+        manager.Or("miVar > 5", "TRUE"); // TRUE (si miVar es 10, como está definido)
+
+        System.out.println("Caso 5: Or(miVar > 5, otraVar == 5)");
+        manager.Or("miVar > 5", "otraVar == 5"); 
+
+        System.out.println("Caso 1: Greater(10, 2 * 5)");
+        manager.Greater("10", "2 * 5"); // FALSE (10 no es mayor que 10)
+        
+        System.out.println("Caso 2: Greater(var1, 2 * 5)");
+        manager.Def("var1", "15");
+        manager.Greater("var1", "2 * 5"); // TRUE (15 es mayor que 10)
+
+        System.out.println("Caso 3: Greater(3 * 5, 4 * 2)");
+        manager.Greater("3 * 5", "4 * 2"); // TRUE (15 es mayor que 8)
+
+        System.out.println("Caso 1: Smaller(10, 2 * 5)");
+        manager.Smaller("10", "2 * 5"); // FALSE (10 no es menor que 10)
+
+        System.out.println("Caso 2: Smaller(var1, 2 * 5)");
+        manager.Def("var1", "5");
+        manager.Smaller("var1", "2 * 5"); // TRUE (5 es menor que 10)
+
+        System.out.println("Caso 3: Smaller(3 + 2, 2 * 5)");
+        manager.Smaller("3 + 2", "2 * 5"); // TRUE (5 es menor que 10)
+
     }
 }

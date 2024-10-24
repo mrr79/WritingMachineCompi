@@ -11,7 +11,8 @@ import java.util.regex.Pattern;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
  *
  * @author andres
@@ -219,6 +220,94 @@ public class Funciones {
         }
     }
 
+    public void Or(String N1, String N2) {
+        // Expresión regular que captura comparaciones con <, >, ==, !=
+        Pattern comparacionRegex = Pattern.compile("\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(==|!=|>|<)\\s*(\\d+|\\s*[a-zA-Z_][a-zA-Z0-9_]*)\\s*");
+        Matcher matchN1 = comparacionRegex.matcher(N1);
+        Matcher matchN2 = comparacionRegex.matcher(N2);
+    
+        boolean resultadoN1 = false;
+        boolean resultadoN2 = false;
+    
+        // Si N1 es una comparación
+        if (matchN1.matches()) {
+            String v1N1 = matchN1.group(1);  // Parte izquierda (variable o expresión)
+            String operadorN1 = matchN1.group(2);  // Operador de comparación
+            String v2N1 = matchN1.group(3);  // Parte derecha (número o variable)
+    
+            int valor1N1 = evaluarExpresion(v1N1);
+            int valor2N1 = evaluarExpresion(v2N1);
+    
+            // Evaluar la comparación
+            resultadoN1 = evaluarComparacion(valor1N1, operadorN1, valor2N1);
+        } else {
+            // Si no es comparación, evaluar la expresión directamente
+            resultadoN1 = evaluarExpresion(N1) == 1;
+        }
+    
+        // Si N2 es una comparación
+        if (matchN2.matches()) {
+            String v1N2 = matchN2.group(1);  // Parte izquierda (variable o expresión)
+            String operadorN2 = matchN2.group(2);  // Operador de comparación
+            String v2N2 = matchN2.group(3);  // Parte derecha (número o variable)
+    
+            int valor1N2 = evaluarExpresion(v1N2);
+            int valor2N2 = evaluarExpresion(v2N2);
+    
+            // Evaluar la comparación
+            resultadoN2 = evaluarComparacion(valor1N2, operadorN2, valor2N2);
+        } else {
+            // Si no es comparación, evaluar la expresión directamente
+            resultadoN2 = evaluarExpresion(N2) == 1;
+        }
+    
+        // Evaluar OR lógico
+        if (resultadoN1 || resultadoN2) {
+            System.out.println("TRUE");
+        } else {
+            System.out.println("FALSE");
+        }
+    }
+
+    public void Greater(String N1, String N2) {
+        // Evaluar las dos expresiones
+        int valor1 = evaluarExpresion(N1);
+        int valor2 = evaluarExpresion(N2);
+        
+        // Comparar si N1 es mayor que N2
+        if (valor1 > valor2) {
+            System.out.println("TRUE");
+        } else {
+            System.out.println("FALSE");
+        }
+    }
+    
+    public void Smaller(String N1, String N2) {
+        // Evaluar las dos expresiones
+        int valor1 = evaluarExpresion(N1);
+        int valor2 = evaluarExpresion(N2);
+        
+        // Comparar si N1 es menor que N2
+        if (valor1 < valor2) {
+            System.out.println("TRUE");
+        } else {
+            System.out.println("FALSE");
+        }
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Método para evaluar comparaciones entre dos valores
     private boolean evaluarComparacion(int valor1, String operador, int valor2) {
         switch (operador) {
@@ -235,6 +324,7 @@ public class Funciones {
                 return false;
         }
     }
+    
 
     private int evaluarExpresion(String expresion) {
         // Expresiones regulares para números, variables y comparaciones
