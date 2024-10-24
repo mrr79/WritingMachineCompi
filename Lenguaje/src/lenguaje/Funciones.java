@@ -6,6 +6,7 @@ package lenguaje;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.script.ScriptEngine;
@@ -516,6 +517,66 @@ public class Funciones {
         }
     }
     
+
+    public void Smaller(String N1, String N2) {
+        // Evaluar las dos expresiones
+        int valor1 = evaluarExpresion(N1);
+        int valor2 = evaluarExpresion(N2);
+        
+        // Comparar si N1 es menor que N2
+        if (valor1 < valor2) {
+            System.out.println("TRUE");
+        } else {
+            System.out.println("FALSE");
+        }
+    }
+    
+
+    public void Substr(String N1, String N2) {
+        int valor1 = evaluarExpresion(N1);
+        int valor2 = evaluarExpresion(N2);
+    
+        if (valor1 >= valor2) {
+            System.out.println("El resultado es: " + (valor1 - valor2));
+        } else {
+            System.out.println("Error: N1 debe ser mayor o igual a N2");
+        }
+    }
+    
+    public void Sum(String N1, String N2) {
+        int valor1 = evaluarExpresion(N1);
+        int valor2 = evaluarExpresion(N2);
+    
+        System.out.println("El resultado es: " + (valor1 + valor2));
+    }
+
+    public void Random(String n) {
+    int valor1 = evaluarExpresion(n);
+
+    // Generar un número aleatorio entre 0 y valor1
+    Random rand = new Random();
+    int numeroRandom = rand.nextInt(valor1 + 1); // Incluye el valor1 en el rango
+
+    System.out.println("Número aleatorio entre 0 y " + valor1 + ": " + numeroRandom);
+    }
+
+    public void Mult(String N1, String N2) {
+        int valor1 = evaluarExpresion(N1);
+        int valor2 = evaluarExpresion(N2);
+
+        System.out.println("El resultado es: " + (valor1 * valor2));
+    }
+
+    public void Div(String N1, String N2) {
+        int valor1 = evaluarExpresion(N1);
+        int valor2 = evaluarExpresion(N2);
+    
+        if (valor2 != 0) {
+            System.out.println("El resultado es: " + (valor1 / valor2));
+        } else {
+            System.out.println("Error: División por cero");
+        }
+    }
 
 
 

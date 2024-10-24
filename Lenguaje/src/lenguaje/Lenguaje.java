@@ -124,6 +124,44 @@ public class Lenguaje {
         System.out.println("Caso 3: Smaller(3 + 2, 2 * 5)");
         manager.Smaller("3 + 2", "2 * 5"); // TRUE (5 es menor que 10)
         */
+        // Ejemplos de Substr
+        System.out.println("Ejemplo Substr:");
+        System.out.println("Caso 1: Substr(10, 2)");
+        manager.Substr("10", "2"); // Resultado: 8
 
+        System.out.println("Caso 2: Substr(5, 10)");
+        manager.Substr("5", "10"); // Error: N1 debe ser mayor o igual a N2
+
+        // Ejemplos de Sum
+        System.out.println("\nEjemplo Sum:");
+        System.out.println("Caso 1: Sum(1, 2)");
+        manager.Sum("1", "2"); // Resultado: 3
+
+        System.out.println("Caso 2: Sum(5, 10)");
+        manager.Sum("5", "10"); // Resultado: 15
+
+        // Ejemplos de Random
+        System.out.println("\nEjemplo Random:");
+        System.out.println("Caso 1: Random(360)");
+        manager.Random("360"); // Número aleatorio entre 0 y 360
+
+        System.out.println("Caso 2: Random(100)");
+        manager.Random("100"); // Número aleatorio entre 0 y 100
+
+        // Ejemplos de Mult
+        System.out.println("\nEjemplo Mult:");
+        System.out.println("Caso 1: Mult(2, 5)");
+        manager.Mult("2", "5"); // Resultado: 10
+
+        System.out.println("Caso 2: Mult(3, Mult(5, 3))");
+        manager.Mult("3", "Mult(5, 3)"); // Resultado: 45 (3 * 15)
+
+        // Ejemplos de Div
+        System.out.println("\nEjemplo Div:");
+        System.out.println("Caso 1: Div(12, 4)");
+        manager.Div("12", "4"); // Resultado: 3
+
+        System.out.println("Caso 2: Div(12, 0)");
+        manager.Div("12", "0"); // Error: División por cero
     }
 }
