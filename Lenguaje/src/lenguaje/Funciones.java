@@ -356,17 +356,28 @@ public class Funciones {
         } while (!evaluarCondicion(condicion));  // Repetir hasta que la condición se cumpla
     }
     
+    // Método While para repetir instrucciones mientras se cumpla la condición
+    public void While(String condicion, Runnable instrucciones) {
+        // Mientras la condición sea verdadera, se ejecutan las instrucciones
+        while (evaluarCondicion(condicion)) {
+            // Ejecutar todas las instrucciones en el cuerpo del While
+            instrucciones.run();
+        }
+    }
+    
+    
+    
         // Método para evaluar expresiones (condiciones)
     public int evaluarExpresion2(String expresion) {
         // Verificar si es una variable
         if (variables.containsKey(expresion.split(" ")[0])) {
-            System.out.print("entra aqui");
+            //System.out.print("entra aqui");
             Variable var = variables.get(expresion.split(" ")[0]);
             return Integer.parseInt(var.valor);
         }
         // Si es una operación, como 'bucle == 4', simula la evaluación
         if (expresion.contains("==")) {
-            
+            //System.out.print("entra aqui");
             String[] partes = expresion.split("==");
             String varNombre = partes[0].trim();
             int valorEsperado = Integer.parseInt(partes[1].trim());
@@ -375,9 +386,11 @@ public class Funciones {
         return 0;
     }
 
-    // Evaluar la condición (similar a evaluarExpresion)
+    // La uso para Repeat y while
     public boolean evaluarCondicion(String condicion) {
+        
         int resultado = evaluarExpresion2(condicion);
+        System.out.print(resultado);
         return resultado != 0;  // Condición se cumple si el resultado es distinto de 0
     }
     
@@ -516,21 +529,7 @@ public class Funciones {
             System.out.println("FALSE");
         }
     }
-    
-
-    public void Smaller(String N1, String N2) {
-        // Evaluar las dos expresiones
-        int valor1 = evaluarExpresion(N1);
-        int valor2 = evaluarExpresion(N2);
-        
-        // Comparar si N1 es menor que N2
-        if (valor1 < valor2) {
-            System.out.println("TRUE");
-        } else {
-            System.out.println("FALSE");
-        }
-    }
-    
+     
 
     public void Substr(String N1, String N2) {
         int valor1 = evaluarExpresion(N1);
@@ -577,17 +576,6 @@ public class Funciones {
             System.out.println("Error: División por cero");
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     // Método para evaluar comparaciones entre dos valores

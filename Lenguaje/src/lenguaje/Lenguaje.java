@@ -54,10 +54,18 @@ public class Lenguaje {
         manager.Def("bucle", "0");
         
         // Definir la instrucción que quieres repetir (en este caso ContinueDown con un valor de 5)
-        Runnable instruccion = () -> manager.ContinueDown("5");
+        //Runnable instruccion = () -> manager.ContinueDown("5");
 
         // Llamar a Repeat con la instrucción y la condición
-        manager.Repeat(instruccion, "bucle==4");
+        //manager.Repeat(instruccion, "bucle==4");
+        
+        
+             
+        Runnable instruccion = () -> manager.ContinueDown("8");  // Ejemplo: gira a la derecha 90 grados
+        
+
+        // Llamar al While con la condición bucle == 1
+        manager.While("bucle==0", instruccion);
         
         
         
@@ -123,7 +131,7 @@ public class Lenguaje {
 
         System.out.println("Caso 3: Smaller(3 + 2, 2 * 5)");
         manager.Smaller("3 + 2", "2 * 5"); // TRUE (5 es menor que 10)
-        */
+        
         // Ejemplos de Substr
         System.out.println("Ejemplo Substr:");
         System.out.println("Caso 1: Substr(10, 2)");
@@ -163,5 +171,6 @@ public class Lenguaje {
 
         System.out.println("Caso 2: Div(12, 0)");
         manager.Div("12", "0"); // Error: División por cero
+        */
     }
 }
