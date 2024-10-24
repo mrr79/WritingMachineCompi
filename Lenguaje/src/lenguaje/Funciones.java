@@ -19,6 +19,10 @@ import java.util.regex.Pattern;
  */
 public class Funciones {
     
+    int lapiz = 0;
+    int posx = 0;
+    int posy = 0;
+    
     // Clase interna Variable
     class Variable {
         DataType tipo;
@@ -159,6 +163,223 @@ public class Funciones {
     public void Add(String nombreVariable) {
         Add(nombreVariable, "1");
     }
+    
+    
+    //Metodo para mover el lapicero hacia arriba
+    public void ContinueUp(String n) {
+        // Evalúa el valor de n
+        int value = evaluarExpresion(n);
+        
+        
+        //El lapicero está pegado a la superficie
+        if (lapiz == 1) {
+            // Lápiz está abajo, dibujando mientras se mueve hacia arriba
+            for (int i = 0; i < value; i++) {
+                // Validación en caso de que se salga de la hoja
+                if (posy == 1) {
+                    System.out.println("Error: Se ha alcanzado el límite de la hoja.");
+                    break;
+                }
+                posy--;
+                System.out.println("Dibujando en la posición Y: " + posy);
+            }
+        } else {
+            // Si el lápiz no está activo, solo mover la posición sin dibujar
+            if (value >= posy) {
+                System.out.println("Error: El valor ingresado excede el límite de la hoja.");
+            } else {
+                posy -= value;
+                System.out.println("Moviéndose a la posición Y: " + posy);
+            }
+        }
+    }
+    
+    
+    
+        // Función para mover el lápiz hacia abajo
+    public void ContinueDown(String n) {
+        int value = evaluarExpresion(n);
+
+        if (lapiz == 1) {
+            for (int i = 0; i < value; i++) {
+                if (posy == 100) {
+                    System.out.println("Error: Se ha alcanzado el limite de la hoja");
+                    break;
+                }
+                posy++;
+                System.out.println("Dibujando en la posición Y: " + posy);
+            }
+        } else {
+            if ((posy + value) > 100) {
+                System.out.println("Error: El valor ingresado excede el limite de la hoja");
+            } else {
+                posy += value;
+                System.out.println("Moviéndose a la posición Y: " + posy);
+            }
+        }
+    }
+
+    // Función para mover el lápiz hacia la derecha
+    public void ContinueRight(String n) {
+        int value = evaluarExpresion(n);
+
+        if (lapiz == 1) {
+            for (int i = 0; i < value; i++) {
+                if (posx == 100) {
+                    System.out.println("Error: Se ha alcanzado el limite de la hoja");
+                    break;
+                }
+                posx++;
+                System.out.println("Dibujando en la posición X: " + posx);
+            }
+        } else {
+            if ((posx + value) > 100) {
+                System.out.println("Error: El valor ingresado excede el limite de la hoja");
+            } else {
+                posx += value;
+                System.out.println("Moviéndose a la posición X: " + posx);
+            }
+        }
+    }
+
+    // Función para mover el lápiz hacia la izquierda
+    public void ContinueLeft(String n) {
+        int value = evaluarExpresion(n);
+
+        if (lapiz == 1) {
+            for (int i = 0; i < value; i++) {
+                if (posx == 1) {
+                    System.out.println("Error: Se ha alcanzado el limite de la hoja");
+                    break;
+                }
+                posx--;
+                System.out.println("Dibujando en la posición X: " + posx);
+            }
+        } else {
+            if (value >= posx) {
+                System.out.println("Error: El valor ingresado excede el limite de la hoja");
+            } else {
+                posx -= value;
+                System.out.println("Moviéndose a la posición X: " + posx);
+            }
+        }
+    }
+    
+    
+    // Método para colocar el lápiz en una nueva posición X, Y
+    public void Pos(String X, String Y) {
+        int valorX = evaluarExpresion(X);
+        int valorY = evaluarExpresion(Y);
+
+        if (valorX > 100 || valorX < 0) {
+            System.out.println("Error: La nueva posición X del lápiz excede los límites");
+        } else if (valorY > 100 || valorY < 0) {
+            System.out.println("Error: La nueva posición Y del lápiz excede los límites");
+        } else {
+            // Asignar los valores a las posiciones actuales
+            posx = valorX;
+            posy = valorY;
+            System.out.println("Lapicero colocado en la posición X: " + posx + ", Y: " + posy);
+        }
+    }
+
+    // Método para colocar el lápiz en una nueva posición X
+    public void PosX(String n) {
+        int valorX = evaluarExpresion(n);
+        if (valorX > 100 || valorX < 0) {
+            System.out.println("Error: La nueva posición X del lápiz excede los límites");
+        } else {
+            posx = valorX;
+            System.out.println("Lapicero colocado en la posición X: " + posx);
+        }
+    }
+
+    // Método para colocar el lápiz en una nueva posición Y
+    public void PosY(String n) {
+        int valorY = evaluarExpresion(n);
+        if (valorY > 100 || valorY < 0) {
+            System.out.println("Error: La nueva posición Y del lápiz excede los límites");
+        } else {
+            posy = valorY;
+            System.out.println("Lapicero colocado en la posición Y: " + posy);
+        }
+    }
+    
+    
+    public void Down() {
+        if (lapiz == 1) {
+            System.out.println("El lápiz ya está pegado a la superficie");
+        } else {
+            lapiz = 1;
+            System.out.println("El lápiz se ha pegado a la superficie");
+        }
+    }
+
+    // Método para despegar el lápiz de la superficie
+    public void Up() {
+        if (lapiz == 0) {
+            System.out.println("El lápiz ya está despegado de la superficie");
+        } else {
+            lapiz = 0;
+            System.out.println("El lápiz se ha despegado de la superficie");
+        }
+    }
+
+    // Método para colocar el lápiz en la posición inicial (1,1)
+    public void Beginning() {
+        if (posx == 1 && posy == 1) {
+            System.out.println("El lápiz ya se encuentra en la posición inicial");
+        } else {
+            posx = 1;
+            posy = 1;
+            System.out.println("El lápiz se ha colocado en la posición inicial");
+        }
+    }
+    
+    private String extraerVariableDeControl(String condicion) {
+        if (condicion.contains("==")) {
+            return condicion.split("==")[0].trim();
+        }
+        return "";  // Si no se encuentra, retornar una cadena vacía (manejar adecuadamente)
+    }
+    
+    
+    public void Repeat(Runnable instrucciones, String condicion) {
+        String variableDeControl = extraerVariableDeControl(condicion);
+        do {
+            // Ejecutar las instrucciones
+            instrucciones.run();
+            
+            Add(variableDeControl);
+
+        } while (!evaluarCondicion(condicion));  // Repetir hasta que la condición se cumpla
+    }
+    
+        // Método para evaluar expresiones (condiciones)
+    public int evaluarExpresion2(String expresion) {
+        // Verificar si es una variable
+        if (variables.containsKey(expresion.split(" ")[0])) {
+            System.out.print("entra aqui");
+            Variable var = variables.get(expresion.split(" ")[0]);
+            return Integer.parseInt(var.valor);
+        }
+        // Si es una operación, como 'bucle == 4', simula la evaluación
+        if (expresion.contains("==")) {
+            
+            String[] partes = expresion.split("==");
+            String varNombre = partes[0].trim();
+            int valorEsperado = Integer.parseInt(partes[1].trim());
+            return (Integer.parseInt(variables.get(varNombre).valor) == valorEsperado) ? 1 : 0;
+        }
+        return 0;
+    }
+
+    // Evaluar la condición (similar a evaluarExpresion)
+    public boolean evaluarCondicion(String condicion) {
+        int resultado = evaluarExpresion2(condicion);
+        return resultado != 0;  // Condición se cumple si el resultado es distinto de 0
+    }
+    
 
     public void Equal(String N1, String N2) {
         // Evaluar las dos expresiones

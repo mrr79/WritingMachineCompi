@@ -18,20 +18,50 @@ public class Lenguaje {
         Funciones manager = new Funciones();
         
         // Definir una variable con nombre y valor
-        manager.Def("miVar", "10"); // Definir una variable numérica
-        manager.Def("variable2", "TRUE"); // Definir una variable lógica
-        manager.Serch("miVar"); // Buscar una variable lógica
+        //manager.Def("miVar", "10"); // Definir una variable numérica
+        //manager.Def("variable2", "TRUE"); // Definir una variable lógica
+        //manager.Serch("miVar"); // Buscar una variable lógica
         
         // Incrementar variables con Add
-        manager.Add("miVar", "10"); // miVar será 20
-        manager.Add("miVar"); // miVar será 21
+        //manager.Add("miVar", "10"); // miVar será 20
+        //manager.Add("miVar"); // miVar será 21
 
         // Definir otra variable para el incremento
-        manager.Def("otraVar", "5");
+        //manager.Def("otraVar", "5");
 
         // Usar el método Add para incrementar con otra variable
-        manager.Add("miVar", "otraVar"); // miVar será 26 (21 + 5)
+        //manager.Add("miVar", "otraVar"); // miVar será 26 (21 + 5)
         
+        
+        //manager.ContinueDown("10");  // Ejemplo de uso
+        //manager.ContinueUp("3");
+        
+        //manager.ContinueRight("7");  // Ejemplo de uso
+        //manager.ContinueLeft("4");   // Ejemplo de uso
+        
+        
+        // Ejemplo de uso
+        //manager.Pos("50", "60");   // Colocar lápiz en X=50, Y=60
+        //manager.PosX("30");           // Colocar lápiz en X=30
+        //manager.PosY("40");           // Colocar lápiz en Y=40
+        
+        //manager.Down();       // Pegar el lápiz a la superficie
+        //manager.Up();         // Despegar el lápiz de la superficie
+        //manager.Beginning(); // Colocar el lápiz en la posición inicial (1,1)
+        
+        /////////////////////////////////////////////////////////////////////////////
+        //Prueba para el repeat
+        manager.Def("bucle", "0");
+        
+        // Definir la instrucción que quieres repetir (en este caso ContinueDown con un valor de 5)
+        Runnable instruccion = () -> manager.ContinueDown("5");
+
+        // Llamar a Repeat con la instrucción y la condición
+        manager.Repeat(instruccion, "bucle==4");
+        
+        
+        
+        /*
         // Casos de uso de la función And
         System.out.println("Caso 1: And(true, true)");
         manager.And("TRUE", "TRUE"); // Debe imprimir "TRUE"
@@ -93,6 +123,7 @@ public class Lenguaje {
 
         System.out.println("Caso 3: Smaller(3 + 2, 2 * 5)");
         manager.Smaller("3 + 2", "2 * 5"); // TRUE (5 es menor que 10)
+        */
 
     }
 }
