@@ -20,7 +20,6 @@ public class Compiler {
     //ademas de crear los tokens y parsearlos
     //genera el arbol de parseo ast.
     public void analizarTexto(String texto){
-        //para manejo de errores:
         errorMessages="";
         //para el analisis del compilador
         this.input= CharStreams.fromString(texto);
@@ -30,6 +29,7 @@ public class Compiler {
         parser.removeErrorListeners();
         this.error=new errorMngr();
         parser.addErrorListener(this.error); //optimizar esto
+        //el .program era una regla general que definio jose
         gramaticaParser.ProgramContext tree = parser.program();
         gramaticaBaseVisitor visitor = new gramaticaBaseVisitor();
         visitor.visit(tree);

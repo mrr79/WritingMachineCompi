@@ -1,4 +1,4 @@
-// Generated from /home/huevitoentorta/Documents/ProyectoCompi/Compilador/src/main/java/org/example/compilador/compilacion/gramatica.g4 by ANTLR 4.13.1
+// Generated from /home/huevitoentorta/Documents/WritingMachineCompi/Compilador/src/main/java/org/example/compilador/compilacion/gramatica.g4 by ANTLR 4.13.1
 package org.example.compilador.compilacion;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -11,89 +11,131 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface gramaticaVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#program}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitProgram(gramaticaParser.ProgramContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#main}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMain(gramaticaParser.MainContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#comments}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitComments(gramaticaParser.CommentsContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#calls}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCalls(gramaticaParser.CallsContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#proc}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitProc(gramaticaParser.ProcContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#varial}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitVarial(gramaticaParser.VarialContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#right}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRight(gramaticaParser.RightContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#left}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLeft(gramaticaParser.LeftContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#sentence}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSentence(gramaticaParser.SentenceContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#operation}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitOperation(gramaticaParser.OperationContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#logical}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLogical(gramaticaParser.LogicalContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link gramaticaParser#define}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitDefine(gramaticaParser.DefineContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#put}.
+	 * Visit a parse tree produced by {@link gramaticaParser#logic}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPut(gramaticaParser.PutContext ctx);
+	T visitLogic(gramaticaParser.LogicContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#n1}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitN1(gramaticaParser.N1Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#n2}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitN2(gramaticaParser.N2Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#n3}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitN3(gramaticaParser.N3Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#n4}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitN4(gramaticaParser.N4Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#n5}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitN5(gramaticaParser.N5Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#n6}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitN6(gramaticaParser.N6Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#operacion}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOperacion(gramaticaParser.OperacionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link gramaticaParser#add}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitAdd(gramaticaParser.AddContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#sub}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSub(gramaticaParser.SubContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#sum}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSum(gramaticaParser.SumContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#equal}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqual(gramaticaParser.EqualContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#greater}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGreater(gramaticaParser.GreaterContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#smaller}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSmaller(gramaticaParser.SmallerContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#random}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRandom(gramaticaParser.RandomContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#mult}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMult(gramaticaParser.MultContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#div}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDiv(gramaticaParser.DivContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#and}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAnd(gramaticaParser.AndContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#or}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOr(gramaticaParser.OrContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#put}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPut(gramaticaParser.PutContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link gramaticaParser#continueup}.
 	 * @param ctx the parse tree
@@ -161,35 +203,17 @@ public interface gramaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBeggining(gramaticaParser.BegginingContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#fory}.
+	 * Visit a parse tree produced by {@link gramaticaParser#sentencia}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFory(gramaticaParser.ForyContext ctx);
+	T visitSentencia(gramaticaParser.SentenciaContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#cases}.
+	 * Visit a parse tree produced by {@link gramaticaParser#forloops}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCases(gramaticaParser.CasesContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#when}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitWhen(gramaticaParser.WhenContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#elses}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitElses(gramaticaParser.ElsesContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#repeat}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRepeat(gramaticaParser.RepeatContext ctx);
+	T visitForloops(gramaticaParser.ForloopsContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link gramaticaParser#whiles}.
 	 * @param ctx the parse tree
@@ -197,117 +221,63 @@ public interface gramaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitWhiles(gramaticaParser.WhilesContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#repeadtcond}.
+	 * Visit a parse tree produced by {@link gramaticaParser#repeat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitRepeadtcond(gramaticaParser.RepeadtcondContext ctx);
+	T visitRepeat(gramaticaParser.RepeatContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#cond}.
+	 * Visit a parse tree produced by {@link gramaticaParser#cicase}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCond(gramaticaParser.CondContext ctx);
+	T visitCicase(gramaticaParser.CicaseContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#equations}.
+	 * Visit a parse tree produced by {@link gramaticaParser#caseStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitEquations(gramaticaParser.EquationsContext ctx);
+	T visitCaseStatement(gramaticaParser.CaseStatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#equal}.
+	 * Visit a parse tree produced by {@link gramaticaParser#listpar}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitEqual(gramaticaParser.EqualContext ctx);
+	T visitListpar(gramaticaParser.ListparContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#and}.
+	 * Visit a parse tree produced by {@link gramaticaParser#listinst}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAnd(gramaticaParser.AndContext ctx);
+	T visitListinst(gramaticaParser.ListinstContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#or}.
+	 * Visit a parse tree produced by {@link gramaticaParser#procedure}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOr(gramaticaParser.OrContext ctx);
+	T visitProcedure(gramaticaParser.ProcedureContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#greater}.
+	 * Visit a parse tree produced by {@link gramaticaParser#main}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitGreater(gramaticaParser.GreaterContext ctx);
+	T visitMain(gramaticaParser.MainContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#smaller}.
+	 * Visit a parse tree produced by {@link gramaticaParser#comments}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSmaller(gramaticaParser.SmallerContext ctx);
+	T visitComments(gramaticaParser.CommentsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#values}.
+	 * Visit a parse tree produced by {@link gramaticaParser#procedureSection}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitValues(gramaticaParser.ValuesContext ctx);
+	T visitProcedureSection(gramaticaParser.ProcedureSectionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#substr}.
+	 * Visit a parse tree produced by {@link gramaticaParser#program}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSubstr(gramaticaParser.SubstrContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#mult}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMult(gramaticaParser.MultContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#div}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDiv(gramaticaParser.DivContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#sum}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSum(gramaticaParser.SumContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#random}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRandom(gramaticaParser.RandomContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpression(gramaticaParser.ExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#factor}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFactor(gramaticaParser.FactorContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#term}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTerm(gramaticaParser.TermContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#logic}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLogic(gramaticaParser.LogicContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#num}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNum(gramaticaParser.NumContext ctx);
+	T visitProgram(gramaticaParser.ProgramContext ctx);
 }

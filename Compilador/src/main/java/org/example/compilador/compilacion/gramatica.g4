@@ -145,7 +145,7 @@ sentencia:
     | beggining;
 
 //para los ciclos: NO SE SI UTILIZA SOLO OPERACIONES O TAMBIEN PUEDE LLAMAR PROCEDIMIENTOS
-forloop:
+forloops:
     FOR ID PAR_OPEN NUMBER TO NUMBER PAR_CLOSE LOOP P_OPEN sentencia+ P_CLOSE END LOOP SEMICOLON;
 //para los whiles
 whiles: //no utiliza boleanos para no aceptar ciclos infinitos.
@@ -155,9 +155,9 @@ repeat:
 
 //
 cicase://ciclos del case 2 Then [ Add(var2, 1) ]
-   WHEN n6 THEN P_OPEN  sentencia P_CLOSE  ;
-case:
-    CASE ID  cicase+ END CASE SEMICOLON
+   WHEN n6 THEN P_OPEN  sentencia P_CLOSE;
+caseStatement:
+    CASE ID cicase+ END CASE SEMICOLON
     |CASE ID cicase+ ELSE P_OPEN  sentencia+ P_CLOSE  END CASE SEMICOLON;
 //******************************************************************************
 //DEFINICIONES DE REGLAS  NECESARIAS PARA LA ESTRUCTURA GENERAL DEL CODIGO***
@@ -167,9 +167,9 @@ listinst://lista de instrucciones:
     define
     | operacion
     | sentencia
-    |forloop
+    |forloops
     |whiles
-    |case
+    |caseStatement
     |repeat
     |procedure;
 
@@ -178,47 +178,18 @@ procedure:
     PROC ID PAR_OPEN  listpar? PAR_CLOSE P_OPEN listinst+ P_CLOSE SEMICOLON END SEMICOLON ;
 
 
-main: MAIN PAR_OPEN P_OPEN procedure+ P_CLOSE PAR_CLOSE SEMICOLON END;
-comments: COM ;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+main: MAIN PAR_OPEN PAR_CLOSE P_OPEN ID PAR_OPEN PAR_CLOSE P_CLOSE  SEMICOLON END;
+comments: COM;
+procedureSection:
+    (comments? procedure)+;
+program:
+    comments procedureSection main;
 MAIN: 'main';
 PRINTLN: 'println';
 CALL: 'call';
 PROC: 'Proc';
 //definicion de los skip
-COM: '//' ~[\r\n]* -> skip;
+COM: '//' ~[\r\n]*;
 RIGHT: 'TurnRight';
 LEFT: 'TurnLeft';
 
@@ -301,6 +272,8 @@ BOOLEAN: 'TRUE' | 'FALSE' ;
 //este ID es el id para los nombres de variables, debe reconocer lo solicitado
 //por las restricciones , inicia con letra minuscula, puede contener minusculas, mayusculas
 //numeros, barrabaja y el arroba
-ID: [a-z][a-zA-Z0-9_@]{2,9};
+//id lleva minuscula y despues mayusculas o letras
+ID: [a-z][a-zA-Z0-9_@];
+
 NUMBER: [0-9]+;
 WS: [ \t\r\n]+ -> skip;
