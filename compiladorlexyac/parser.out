@@ -1,0 +1,321 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AND
+    ASSIGN
+    BEG
+    BRACKET_CLOSE
+    BRACKET_OPEN
+    CALL
+    CASE
+    CDOWN
+    CLEFT
+    COLOR
+    COM
+    CRIGHT
+    CUP
+    DEF
+    DIV
+    DIVO
+    DOWN
+    ELSE
+    END
+    EQ
+    EQUAL
+    FOR
+    GEQ
+    GREATER
+    GT
+    LEFT
+    LEQ
+    LOOP
+    LT
+    MAIN
+    MINUS
+    MULT
+    MULTO
+    NEQ
+    OR
+    PLUS
+    POS
+    POSX
+    POSY
+    PRINTLN
+    PROC
+    PUT
+    P_CLOSE
+    P_OPEN
+    RANDOM
+    REPEAT
+    RIGHT
+    SMALLER
+    SUBSTR
+    SUMO
+    THEN
+    TO
+    UNTIL
+    UP
+    WHEN
+    WHEND
+    WHILE
+
+Grammar
+
+Rule 0     S' -> n1
+Rule 1     n1 -> NUMBER
+Rule 2     n1 -> operation
+Rule 3     n1 -> BOOLEAN
+Rule 4     n2 -> NUMBER
+Rule 5     n2 -> operation
+Rule 6     n2 -> ID
+Rule 7     n3 -> NUMBER
+Rule 8     n3 -> ID
+Rule 9     n4 -> NUMBER
+Rule 10    n4 -> operation
+Rule 11    n4 -> ID
+Rule 12    n4 -> BOOLEAN
+Rule 13    n5 -> NUMBER
+Rule 14    n5 -> ID
+Rule 15    n5 -> BOOLEAN
+Rule 16    n6 -> NUMBER
+Rule 17    n6 -> BOOLEAN
+Rule 18    operation -> add
+Rule 19    add -> ADDO PAR_OPEN ID PAR_CLOSE SEMICOLON
+Rule 20    add -> ADDO PAR_OPEN ID COLON n2 PAR_CLOSE SEMICOLON
+
+Terminals, with rules where they appear
+
+ADDO                 : 19 20
+AND                  : 
+ASSIGN               : 
+BEG                  : 
+BOOLEAN              : 3 12 15 17
+BRACKET_CLOSE        : 
+BRACKET_OPEN         : 
+CALL                 : 
+CASE                 : 
+CDOWN                : 
+CLEFT                : 
+COLON                : 20
+COLOR                : 
+COM                  : 
+CRIGHT               : 
+CUP                  : 
+DEF                  : 
+DIV                  : 
+DIVO                 : 
+DOWN                 : 
+ELSE                 : 
+END                  : 
+EQ                   : 
+EQUAL                : 
+FOR                  : 
+GEQ                  : 
+GREATER              : 
+GT                   : 
+ID                   : 6 8 11 14 19 20
+LEFT                 : 
+LEQ                  : 
+LOOP                 : 
+LT                   : 
+MAIN                 : 
+MINUS                : 
+MULT                 : 
+MULTO                : 
+NEQ                  : 
+NUMBER               : 1 4 7 9 13 16
+OR                   : 
+PAR_CLOSE            : 19 20
+PAR_OPEN             : 19 20
+PLUS                 : 
+POS                  : 
+POSX                 : 
+POSY                 : 
+PRINTLN              : 
+PROC                 : 
+PUT                  : 
+P_CLOSE              : 
+P_OPEN               : 
+RANDOM               : 
+REPEAT               : 
+RIGHT                : 
+SEMICOLON            : 19 20
+SMALLER              : 
+SUBSTR               : 
+SUMO                 : 
+THEN                 : 
+TO                   : 
+UNTIL                : 
+UP                   : 
+WHEN                 : 
+WHEND                : 
+WHILE                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+add                  : 18
+n1                   : 0
+n2                   : 20
+n3                   : 
+n4                   : 
+n5                   : 
+n6                   : 
+operation            : 2 5 10
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . n1
+    (1) n1 -> . NUMBER
+    (2) n1 -> . operation
+    (3) n1 -> . BOOLEAN
+    (18) operation -> . add
+    (19) add -> . ADDO PAR_OPEN ID PAR_CLOSE SEMICOLON
+    (20) add -> . ADDO PAR_OPEN ID COLON n2 PAR_CLOSE SEMICOLON
+
+    NUMBER          shift and go to state 2
+    BOOLEAN         shift and go to state 4
+    ADDO            shift and go to state 6
+
+    n1                             shift and go to state 1
+    operation                      shift and go to state 3
+    add                            shift and go to state 5
+
+state 1
+
+    (0) S' -> n1 .
+
+
+
+state 2
+
+    (1) n1 -> NUMBER .
+
+    $end            reduce using rule 1 (n1 -> NUMBER .)
+
+
+state 3
+
+    (2) n1 -> operation .
+
+    $end            reduce using rule 2 (n1 -> operation .)
+
+
+state 4
+
+    (3) n1 -> BOOLEAN .
+
+    $end            reduce using rule 3 (n1 -> BOOLEAN .)
+
+
+state 5
+
+    (18) operation -> add .
+
+    $end            reduce using rule 18 (operation -> add .)
+    PAR_CLOSE       reduce using rule 18 (operation -> add .)
+
+
+state 6
+
+    (19) add -> ADDO . PAR_OPEN ID PAR_CLOSE SEMICOLON
+    (20) add -> ADDO . PAR_OPEN ID COLON n2 PAR_CLOSE SEMICOLON
+
+    PAR_OPEN        shift and go to state 7
+
+
+state 7
+
+    (19) add -> ADDO PAR_OPEN . ID PAR_CLOSE SEMICOLON
+    (20) add -> ADDO PAR_OPEN . ID COLON n2 PAR_CLOSE SEMICOLON
+
+    ID              shift and go to state 8
+
+
+state 8
+
+    (19) add -> ADDO PAR_OPEN ID . PAR_CLOSE SEMICOLON
+    (20) add -> ADDO PAR_OPEN ID . COLON n2 PAR_CLOSE SEMICOLON
+
+    PAR_CLOSE       shift and go to state 9
+    COLON           shift and go to state 10
+
+
+state 9
+
+    (19) add -> ADDO PAR_OPEN ID PAR_CLOSE . SEMICOLON
+
+    SEMICOLON       shift and go to state 11
+
+
+state 10
+
+    (20) add -> ADDO PAR_OPEN ID COLON . n2 PAR_CLOSE SEMICOLON
+    (4) n2 -> . NUMBER
+    (5) n2 -> . operation
+    (6) n2 -> . ID
+    (18) operation -> . add
+    (19) add -> . ADDO PAR_OPEN ID PAR_CLOSE SEMICOLON
+    (20) add -> . ADDO PAR_OPEN ID COLON n2 PAR_CLOSE SEMICOLON
+
+    NUMBER          shift and go to state 14
+    ID              shift and go to state 12
+    ADDO            shift and go to state 6
+
+    n2                             shift and go to state 13
+    operation                      shift and go to state 15
+    add                            shift and go to state 5
+
+state 11
+
+    (19) add -> ADDO PAR_OPEN ID PAR_CLOSE SEMICOLON .
+
+    $end            reduce using rule 19 (add -> ADDO PAR_OPEN ID PAR_CLOSE SEMICOLON .)
+    PAR_CLOSE       reduce using rule 19 (add -> ADDO PAR_OPEN ID PAR_CLOSE SEMICOLON .)
+
+
+state 12
+
+    (6) n2 -> ID .
+
+    PAR_CLOSE       reduce using rule 6 (n2 -> ID .)
+
+
+state 13
+
+    (20) add -> ADDO PAR_OPEN ID COLON n2 . PAR_CLOSE SEMICOLON
+
+    PAR_CLOSE       shift and go to state 16
+
+
+state 14
+
+    (4) n2 -> NUMBER .
+
+    PAR_CLOSE       reduce using rule 4 (n2 -> NUMBER .)
+
+
+state 15
+
+    (5) n2 -> operation .
+
+    PAR_CLOSE       reduce using rule 5 (n2 -> operation .)
+
+
+state 16
+
+    (20) add -> ADDO PAR_OPEN ID COLON n2 PAR_CLOSE . SEMICOLON
+
+    SEMICOLON       shift and go to state 17
+
+
+state 17
+
+    (20) add -> ADDO PAR_OPEN ID COLON n2 PAR_CLOSE SEMICOLON .
+
+    $end            reduce using rule 20 (add -> ADDO PAR_OPEN ID COLON n2 PAR_CLOSE SEMICOLON .)
+    PAR_CLOSE       reduce using rule 20 (add -> ADDO PAR_OPEN ID COLON n2 PAR_CLOSE SEMICOLON .)
+
