@@ -3,8 +3,20 @@ from lexer import lexer, tokens  # Importa el lexer y los tokens
 from parser import parser  # Importa el parser
 
 # Define tu input de prueba
+#Add (colu2,var1); check
+#SUBSTR o Substr (4,var1); check
+#Equal , no se puede el equal pequeño , check
+#true y false son en mayusculas
+#And (var1,4); check
+#Or (var1,4); check
+#Greater (var1,4) check
+#Smaller (var1,4) check
+#Random (var1); check
+#Mult (var1,4); check
+#Div (var1,4); check
+#Sum (var1,4); check
 test_input = """
-Add (colu2,10);
+Def (var3_2,9);
 """
 
 def main():
