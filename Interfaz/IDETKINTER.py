@@ -3,6 +3,8 @@ from tkinter import filedialog
 from lexer import lexer, tokens  # Importa el lexer y los tokens
 from parser import parser  # Importa el parser
 import subprocess
+from errorMnger import errorMnger
+from LLVM import generate_LLVM
 
 
 class IDE:
@@ -143,17 +145,35 @@ class IDE:
 
         # Verificar si el código está vacío
         if not code:
-            self.console.insert(tk.END, "No hay código para ejecutar.\n")
+            self.console.insert(tk.END, "No hay código para ejecutar.\n")  #como meter la info en la consolita
             self.console.config(state="disabled")
             return
 
         # Ejecutar el código en un proceso separado
         try:
-            output = parser.parse(code, lexer=lexer)
+            output = parser.parse(code, lexer=lexer)   #donde agarra el texto de la interfaz y lo manda a parse y lexer
+            errorMngers = errorMnger()
+            self.console.delete(1.0, tk.END)
 
 
-            # Mostrar la salida o los errores en la consola
-            self.console.insert(tk.END, output)
+            # Mostrar el resultado del análisis sintáctico, se muestra el ast.
+            if errorMngers.has_errors():
+                print("Errores encontrados:")
+                for error in errorMngers.get_errors():
+                    self.console.insert(tk.END, f"{error}\n")
+
+                errorMngers.clear_errors_if_any
+                #self.console.delete(1.0, tk.END)
+
+            else:
+                print("Análisis completado sin errores.")
+                print(errorMngers.has_errors())
+                print(output)
+                # Mostrar la salida o los errores en la consola
+                self.console.insert(tk.END, output)
+                generate_LLVM(str(output))
+            errorMngers.clear_errors_if_any 
+         
 
         except Exception as e:
             # Mostrar cualquier excepción en la consola

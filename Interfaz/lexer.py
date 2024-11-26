@@ -14,9 +14,9 @@ tokens = (
 )
 
 # Expresiones regulares simples para tokens literales
-t_MAIN = r'main'
+t_MAIN = r'Main'
 t_PRINTLN = r'println'
-t_CALL = r'call'
+t_CALL = r'Call'
 t_PROC = r'Proc'
 t_COM = r'//[^\r\n]*'
 t_RIGHT = r'TurnRight'
@@ -41,7 +41,7 @@ t_BEG = r'Beginning'
 t_FOR = r'For'
 t_LOOP = r'Loop'
 t_END = r'End'
-t_TO = r'to'
+t_TO = r'To'
 t_CASE = r'Case|case'
 t_WHEN = r'When'
 t_THEN = r'Then'
